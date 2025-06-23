@@ -1,0 +1,4 @@
+@EndUserText.label: 'LAB 03 CDS'
+define service ZSD_CDS_CUSTOM_DETAIL_FJCM {
+  expose ZCDS_CUSTOM_DETAIL_FJCM as Customer;
+}
