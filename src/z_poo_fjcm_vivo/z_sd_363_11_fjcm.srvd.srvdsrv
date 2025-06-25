@@ -1,0 +1,5 @@
+@EndUserText.label: 'SD - Custom Entity (:'
+define service Z_sd_363_11_fjcm {
+  expose z363_11_fjcm as Travel;
+  expose zcds_01_fjcm as AnotherEntity;
+}

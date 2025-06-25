@@ -1,7 +1,7 @@
 @AbapCatalog.viewEnhancementCategory: [#NONE]
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Amount/Quantity Conversion Reference'
-@Metadata.ignorePropagatedAnnotations: true 
+@Metadata.ignorePropagatedAnnotations: true
 @ObjectModel.usageType:{
     serviceQuality: #X,
     sizeCategory: #S,
@@ -13,7 +13,7 @@ define view entity Z363_03_FJCM
   key carrier_id     as CarrierId,
   key connection_id  as ConnectionId,
   key flight_date    as FlightDate,
-      @Semantics.amount.currencyCode: 'CurrencyCode' //Anotacion 
+      @Semantics.amount.currencyCode: 'CurrencyCode' //Anotacion para la propagacion de la moneda *RECOMENDADO SIEMPRE*
       price          as Price,
       currency_code  as CurrencyCode,
       plane_type_id  as PlaneTypeId,

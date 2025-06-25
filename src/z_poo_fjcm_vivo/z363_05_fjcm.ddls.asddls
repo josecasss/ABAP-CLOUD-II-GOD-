@@ -12,22 +12,22 @@ define view entity Z363_05_FJCM as select from Z363_06_FJCM //Consumiendo de la 
 {
   key travel_id,
       agency_id,
-
-      @Semantics.amount.currencyCode: 'CurrencyCode'
-      min( total_price ) as MinTotalPrice,
+//Cuando se hacen agregaciones obligado usar GROUP BY
+      @Semantics.amount.currencyCode: 'CurrencyCode'  
+      min( total_price ) as MinTotalPrice,   //Agregacion
+      
+      @Semantics.amount.currencyCode: 'CurrencyCode' 
+      max( total_price ) as MaxTotalPrice,   //Agregacion
       
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      max( total_price ) as MaxTotalPrice,
+      sum( total_price ) as SumTotalPrice,   //Agregacion
       
-      @Semantics.amount.currencyCode: 'CurrencyCode'
-      sum( total_price ) as SumTotalPrice,
+      count( distinct total_price ) as CountDistTotalPrice, // *Distint* Solo valores unicos, no duplicados
       
-      count( distinct total_price ) as CountDistTotalPrice,
-      
-      count( * ) as CountAllTotalPrice,
+      count( * ) as CountAllTotalPrice,                     // (*) No distingue duplicados, cuenta todo 
          
       @Semantics.amount.currencyCode: 'CurrencyCode'
-      avg( total_price as abap.dec(16,2) ) as AvgTotalPrice,
+      avg( total_price as abap.dec(16,2) ) as AvgTotalPrice,   //Agregacion
       
       currency_code      as CurrencyCode
 }

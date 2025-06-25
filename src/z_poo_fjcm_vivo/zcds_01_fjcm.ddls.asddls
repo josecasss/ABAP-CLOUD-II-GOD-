@@ -16,7 +16,7 @@ define view entity zcds_01_fjcm
       title       as Title,
       street      as Street,
 
-      case country_code // Tienen que ser el mismo tipo en el case
+      case country_code // Tienen que ser el mismo tipo en cada salida del case
            when 'US' then concat( 'United States of America -', concat(first_name, last_name) ) //Funcion concatenar,
            when 'DE' then concat( 'Germany -', first_name)
            when 'ES' then case title
@@ -25,6 +25,6 @@ define view entity zcds_01_fjcm
                           else 'ES- Different Title - '
                           end
            else 'Other Country Code'
-           end    as ElementCase // Nombre del campo calculado
+           end    as ElementCase // Nombre del campo del case
 
 }
