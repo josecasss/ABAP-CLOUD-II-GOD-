@@ -1,0 +1,18 @@
+@EndUserText.label: 'Inheritance'
+@MappingRole: true
+define role ZAC_03_FJCM {
+    grant
+        select
+            on
+                z363_17_fjcm
+//Ways to do it inheratance                
+//                    where
+//                        inheriting conditions from entity z363_16_fjcm; // Inheritance Access Control from this CDS
+//Ways to do it inheratance more explicit 
+                      where inherit zac_01_fjcm              // inheriting from this AccessControl  
+                      for grant select on z363_16_fjcm       // Taking the conditions from the AccessControl of this CDS
+                      or status = 'P';                       // Adding new condition 
+                        
+}
+
+// Made it with Template Inheritance with Conditions

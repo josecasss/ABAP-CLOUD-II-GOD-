@@ -1,0 +1,15 @@
+@EndUserText.label: 'Aspect PFCG'
+@MappingRole: true
+define role ZAC_04_fjcm {
+    grant 
+        select
+            on
+               z363_18_fjcm
+                    where
+                        (CarrierId) = aspect pfcg_auth(ZAO_C_FJCM, ZAF_C_FJCM, ACTVT = '03'); //Column - Authorization field, Authorization object, act 
+                        
+}
+
+
+// Made with RolewithPCFGAspect template
+// The BASIS TEAM O BASIS ROLE have to configure and set the roles, the users, restriccions and etc

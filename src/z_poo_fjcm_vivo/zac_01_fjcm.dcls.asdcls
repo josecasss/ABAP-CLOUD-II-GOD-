@@ -1,0 +1,27 @@
+@EndUserText.label: 'Access Control Literal'
+@MappingRole: true
+define role ZAC_01_FJCM {
+    grant
+        select
+            on 
+                z363_15_fjcm
+                    where
+                        CountryCode = 'ES';
+// Multiple grants adding more access to other CDS                        
+    grant
+        select
+            on 
+                z363_16_fjcm
+                    where
+                        Status = 'N';
+
+                                                                       
+}
+
+//To grant permissions to the role, just showing what the role can see 
+//For this case i just put to be visible the field CountryCode ES but i can put more SQL logic
+// *IMPORTANT* Its not a filter, is a literal that will be used to restrict the data that the role can access.
+
+
+
+//Example of access control is for roles that are used to restrict access to certain data based on specific criteria, such as country codes, user roles, or other attributes.

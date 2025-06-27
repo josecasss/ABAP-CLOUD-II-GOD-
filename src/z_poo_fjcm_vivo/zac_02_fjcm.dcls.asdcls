@@ -1,0 +1,13 @@
+@EndUserText.label: 'Multiple Grant'
+@MappingRole: true
+define role ZAC_02_FJCM {
+    grant
+        select
+            on
+                z363_15_fjcm
+                    where
+                        CountryCode = 'US';  
+                        
+}
+
+//Grand in addition this access to the CDS 
