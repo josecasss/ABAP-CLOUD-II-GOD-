@@ -1,0 +1,13 @@
+@EndUserText.label: 'LAB 05 CDS'
+@MappingRole: true
+define role ZAC_AIRPORT_3_FJCM {
+    grant
+        select
+            on
+                ZCDS_AIRPORT_3_FJCM
+//                    where
+//                        inheriting conditions from entity ZCDS_AIRPORT_2_FJCM;
+                     where inherit ZCA_AIRPORT_2_FJCM        //The access control wich is inherited
+                     for grant select on ZCDS_AIRPORT_2_FJCM //Taking condition from this entity CDS
+                     and AirportId = 'MUC';  // New condition (:                        
+}

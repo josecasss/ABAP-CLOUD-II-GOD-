@@ -1,0 +1,10 @@
+@EndUserText.label: 'LAB 05'
+@MappingRole: true
+define role ZCA_AIRPORT_1_FJCM {
+    grant
+        select
+            on
+                ZCDS_AIRPORT_1_FJCM
+                    where
+                        country = 'US';                       
+}
