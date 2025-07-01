@@ -44,6 +44,7 @@ class zcl_data_gen_rap_fjcm implementation.
                       lastchangedat as local_last_changed_at
                       where travel_id between 1 and 3000 ).
 
+"Validate the data before inserting
     if sy-subrc eq 0.
        out->write( |Travel.... { sy-dbcnt } rows inserted | ).
     endif.
