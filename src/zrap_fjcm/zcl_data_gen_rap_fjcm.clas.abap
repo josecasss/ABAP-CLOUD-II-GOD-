@@ -37,14 +37,16 @@ class zcl_data_gen_rap_fjcm implementation.
                         when 'P' then 'O'  " PENDING to OPEN
                         when 'N' then 'O'  " NEW to OPEN
                         else 'X'
-                        end as overall_status,
-                      createdby     as local_created_by,
-                      createdat as aslocal_created_at,
+                      end as overall_status,
+                      createdby     as local_created_by,       "Im taking registers from /dmo/travel | in /dmo/travel is created by and in ztravel_fjcm is local_created_by
+                      createdat     as aslocal_created_at,
                       lastchangedby as local_last_changed_by,
                       lastchangedat as local_last_changed_at
-                            ).
+                      where travel_id between 1 and 3000 ).
 
-
+    if sy-subrc eq 0.
+       out->write( |Travel.... { sy-dbcnt } rows inserted | ).
+    endif.
 
   endmethod.
 endclass.
