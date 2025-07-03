@@ -36,7 +36,7 @@ class zcl_data_gen_rap_fjcm implementation.
                         when 'B' then 'A'  " BOOKED to ACTIVE
                         when 'P' then 'O'  " PENDING to OPEN
                         when 'N' then 'O'  " NEW to OPEN
-                        else 'X'
+                        else 'X'           " CANCELLED
                       end as overall_status,
                       createdby     as local_created_by,       "Im taking registers from /dmo/travel | in /dmo/travel is created by and in ztravel_fjcm is local_created_by
                       createdat     as aslocal_created_at,

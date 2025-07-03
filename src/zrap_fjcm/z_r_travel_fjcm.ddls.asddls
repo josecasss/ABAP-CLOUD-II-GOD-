@@ -26,6 +26,7 @@ define root view entity z_r_travel_fjcm
       overall_status        as OverallStatus,
 
       //AUDIT FIELDS
+      
       @Semantics.user.createdBy: true
       local_created_by      as LocalCreatedBy,
       @Semantics.systemDateTime.createdAt: true
@@ -37,7 +38,7 @@ define root view entity z_r_travel_fjcm
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       local_last_changed_at as LocalLastChangedAt,
 
-      //Total Etag
+      //TOTAL Etag
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt,
       
