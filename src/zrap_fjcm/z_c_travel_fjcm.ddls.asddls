@@ -1,16 +1,25 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
-@EndUserText.label: 'Travel - Consumption'
+@EndUserText.label: 'Travel - Consumption'      // 2 LAYER OF THE APPLICATION
 @Metadata.ignorePropagatedAnnotations: true
+
+@Search.searchable: true                   // ***TO ACTIVATE ADVANCED SEARCH FUNCTIONALITY***               
 define root view entity z_c_travel_fjcm
 provider contract transactional_query    // This view is used for transactional queries
   as projection on z_r_travel_fjcm
 {
   key TravelUUID,
       TravelID,
+      
+      @Search.defaultSearchElement: true     // Default search element for the TravelID
+      @Search.fuzzinessThreshold: 0.8       // Fuzziness threshold for better search results     *Umbral 0.0 .. 1.0 to allow searchs according to exact match
+      @Search.ranking: #MEDIUM             //  Ranking for search results
       @ObjectModel.text.element: ['AgencyName'] // Text elements for better readability
       AgencyID,
       _Agency.Name as AgencyName,
       
+      @Search.defaultSearchElement: true     // Default search element for the CustomerID
+      @Search.fuzzinessThreshold: 0.8       // Fuzziness threshold for better search results     *Umbral 0.0 .. 1.0 to allow searchs according to exact match
+      @Search.ranking: #MEDIUM             //  Ranking for search results
       @ObjectModel.text.element: ['CustomerName'] // Text elements for better readability
       CustomerID,
       _Customer.LastName as CustomerName,
@@ -25,7 +34,7 @@ provider contract transactional_query    // This view is used for transactional 
       Description,
       
       OverallStatus,
-        _OverallStatus._Text.Text as OverallStatusText : localized, //
+        _OverallStatus._Text.Text as OverallStatusText : localized, // Better way to do it so the system can handle the text depending on the language
 //      _OverallStatus._Text[1: Language = $session.system_language].Text as OverallStatusText, //Reduce cardinality to 1 
       
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
