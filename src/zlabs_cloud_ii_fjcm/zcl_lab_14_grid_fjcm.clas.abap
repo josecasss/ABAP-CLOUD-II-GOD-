@@ -1,24 +1,24 @@
-CLASS zcl_lab_14_grid_fjcm DEFINITION INHERITING FROM zcl_lab_13_view_fjcm
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class zcl_lab_14_grid_fjcm definition inheriting from zcl_lab_13_view_fjcm
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+  public section.
 
-    METHODS: constructor   IMPORTING VALUE(iv_view_type) TYPE string
-                                     VALUE(iv_box)       TYPE string.
+    methods: constructor   importing value(iv_view_type) type string
+                                     value(iv_box)       type string.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
+  protected section.
+  private section.
+endclass.
 
-CLASS zcl_lab_14_grid_fjcm IMPLEMENTATION.
+class zcl_lab_14_grid_fjcm implementation.
 
-  METHOD constructor.
+  method constructor.
 
     super->constructor( iv_view_type = iv_view_type ).
     box = iv_box.
 
-  ENDMETHOD.
+  endmethod.
 
-ENDCLASS.
+endclass.

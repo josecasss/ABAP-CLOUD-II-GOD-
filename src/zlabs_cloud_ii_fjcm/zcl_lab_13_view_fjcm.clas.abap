@@ -1,25 +1,20 @@
-CLASS zcl_lab_13_view_fjcm DEFINITION
-  PUBLIC
+class zcl_lab_13_view_fjcm definition
+  public
 "  FINAL
-  CREATE PUBLIC .
+  create public .
+  public section.
 
-  PUBLIC SECTION.
+    methods: constructor importing value(iv_view_type) type string.
 
-    METHODS: constructor IMPORTING VALUE(iv_view_type) TYPE string.
+  protected section.
+    data: view_type type string,
+          box       type string.
 
-  PROTECTED SECTION.
-    DATA: view_type TYPE string,
-          box       TYPE string.
+  private section.
+endclass.
 
-  PRIVATE SECTION.
-ENDCLASS.
-
-
-
-CLASS zcl_lab_13_view_fjcm IMPLEMENTATION.
-
-  METHOD constructor.
+class zcl_lab_13_view_fjcm implementation.
+  method constructor.
     me->view_type = iv_view_type.
-  ENDMETHOD.
-
-ENDCLASS.
+  endmethod.
+endclass.

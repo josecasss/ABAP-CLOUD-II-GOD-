@@ -1,22 +1,19 @@
-CLASS zcl_lab_19_lion_fjcm DEFINITION INHERITING FROM zcl_lab_18_animal_fjcm
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class zcl_lab_19_lion_fjcm definition inheriting from zcl_lab_18_animal_fjcm
+  public
+  final
+  create public .
+  public section.
 
-  PUBLIC SECTION.
+    methods: walk redefinition.
 
-  METHODS: walk REDEFINITION.
+  protected section.
+  private section.
+endclass.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
+class zcl_lab_19_lion_fjcm implementation.
 
+  method walk.
+    rv_walk = 'The lion walks'.
+  endmethod.
 
-
-CLASS zcl_lab_19_lion_fjcm IMPLEMENTATION.
-
-  METHOD walk.
-  rv_walk = 'The lion walks'.
-  ENDMETHOD.
-
-ENDCLASS.
+endclass.

@@ -2,7 +2,10 @@
 @EndUserText.label: 'Travel - Consumption'      // 2 LAYER OF THE APPLICATION
 @Metadata.ignorePropagatedAnnotations: true
 
-@Search.searchable: true                   // ***TO ACTIVATE ADVANCED SEARCH FUNCTIONALITY***               
+@Search.searchable: true                   // ***TO ACTIVATE ADVANCED SEARCH FUNCTIONALITY***  
+@Metadata.allowExtensions: true          // Allow extensions to this view entity
+
+             
 define root view entity z_c_travel_fjcm
 provider contract transactional_query    // This view is used for transactional queries
   as projection on z_r_travel_fjcm

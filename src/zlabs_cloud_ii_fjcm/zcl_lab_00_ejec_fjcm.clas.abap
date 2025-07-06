@@ -109,55 +109,55 @@ class zcl_lab_00_ejec_fjcm implementation.
 *    DATA(lo_grid) = NEW zcl_lab_14_grid_fjcm( iv_view_type = 'Standart view' iv_box = 'Data grid' ).
 
 ****Ejercicio 3**********
-
-*    DATA(lo_flight_prices) = NEW zcl_lab_15_flight_price_fjcm( ).
 *
-*    SELECT SINGLE FROM /dmo/flight
-*    FIELDS *
-*    WHERE carrier_id = 'AA'
-*    INTO @DATA(ls_flight).
+*    data(lo_flight_prices) = new zcl_lab_15_flight_price_fjcm( ).
+*
+*    select single from /dmo/flight
+*    fields *
+*    where carrier_id = 'AA'
+*    into @data(ls_flight).
 *
 *    out->write( name = 'Vuelo seleccionado' data = ls_flight ).
 *
-*    IF ls_flight IS NOT INITIAL.
+*    if ls_flight is not initial.
 *      lo_flight_prices->add_price( iv_add_price = ls_flight ).
 *      out->write( name = 'Vuelo añadido' data = lo_flight_prices->mt_flights ).
 *      out->write( cl_abap_char_utilities=>newline ).
-*    ELSE.
+*    else.
 *      out->write( 'Vuelo NO añadido' ).
-*    ENDIF.
+*    endif.
 *
-*    DATA(lo_discount) = NEW zcl_lab_16_price_discount_fjcm( ).
+*    data(lo_discount) = new zcl_lab_16_price_discount_fjcm( ).
 *    lo_discount->add_price( iv_add_price = ls_flight ).
 *    out->write( name = 'Vuelo seleccionado' data = ls_flight ).
 *    out->write( name = 'Vuelo con 10% de descuento' data = lo_discount->mt_flights ).
 *    out->write( cl_abap_char_utilities=>newline ).
 *
 *
-*    DATA(lo_super_discount) = NEW zcl_lab_17_super_discount_fjcm( ).
+*    data(lo_super_discount) = new zcl_lab_17_super_discount_fjcm( ).
 *    lo_super_discount->add_price( iv_add_price = ls_flight ).
 *    out->write( name = 'Vuelo seleccionado' data = ls_flight ).
 *    out->write( name = 'Vuelo con 20% de descuento' data = lo_super_discount->mt_flights ).
 
 ***************Ejercicio 4**************
 
-* DATA(lo_animal) = NEW zcl_lab_18_animal_fjcm( ).
-* DATA(lo_lion) = NEW zcl_lab_19_lion_fjcm( ).
+*    data(lo_animal) = new zcl_lab_18_animal_fjcm( ).
+*    data(lo_lion) = new zcl_lab_19_lion_fjcm( ).
 *
-* out->write( lo_animal->walk( ) ).
-* out->write( lo_lion->walk( ) ).
+*    out->write( lo_animal->walk( ) ).
+*    out->write( lo_lion->walk( ) ).
 *
-* " Narrowing CAST
-*   lo_animal = lo_lion.       " Superior -> inferior
-*   out->write( lo_animal->walk( ) ).
+*    " Narrowing CAST
+*    lo_animal = lo_lion.       " Superior -> inferior
+*    out->write( lo_animal->walk( ) ).
 *
-* " Widening CAST
-*   TRY.
-*     lo_lion ?= lo_animal.    " Inferior -> Superior  ?= por que no se puede
-*     out->write( lo_lion->walk( ) ).
-*   CATCH cx_sy_move_cast_error INTO DATA(lx_error).
-*     out->write( lx_error->get_text( ) ).
-*   ENDTRY.
+*    " Widening CAST
+*    try.
+*        lo_lion ?= lo_animal.    " Inferior -> Superior  ?= por que no se puede
+*        out->write( lo_lion->walk( ) ).
+*      catch cx_sy_move_cast_error into data(lx_error).
+*        out->write( lx_error->get_text( ) ).
+*    endtry.
 
 *************Ejerecicio 8**************
 
@@ -377,10 +377,10 @@ class zcl_lab_00_ejec_fjcm implementation.
 
 ************Ejercicio 5************
 
-    data(go_operating_system) = new zcl_lab_44_operating_sys_fjcm( ).
-    data(go_chrome) = new zcl_lab_45_chrome_fjcm( ).
-
-    set handler go_chrome->on_close_window for go_operating_system.
+*    data(go_operating_system) = new zcl_lab_44_operating_sys_fjcm( ).
+*    data(go_chrome) = new zcl_lab_45_chrome_fjcm( ).
+*
+*    set handler go_chrome->on_close_window for go_operating_system.
 
 *    do 5 times.
 *      wait up to 1 seconds.
@@ -390,16 +390,16 @@ class zcl_lab_00_ejec_fjcm implementation.
 
 ************Ejercicio 6************
 
-    do 5 times.
-      wait up to 1 seconds.
-      go_operating_system->mouse_movement( ).
-      out->write( go_chrome->log ).
-      if sy-index = 3.
-        set handler go_chrome->on_close_window for go_operating_system activation abap_false.
-        go_chrome->log = |No handler for event new transfer { sy-index }|.
-      endif.
-      exit.
-    enddo.
+*    do 5 times.
+*      wait up to 1 seconds.
+*      go_operating_system->mouse_movement( ).
+*      out->write( go_chrome->log ).
+*      if sy-index = 3.
+*        set handler go_chrome->on_close_window for go_operating_system activation abap_false.
+*        go_chrome->log = |No handler for event new transfer { sy-index }|.
+*      endif.
+*      exit.
+*    enddo.
 
 
 *******Completar EVENTOS me rindo por ahora, seguire mas adelante****
