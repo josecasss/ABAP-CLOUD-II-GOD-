@@ -1,24 +1,24 @@
-CLASS zcl_lab_27_factory_fjcm DEFINITION ABSTRACT
-  PUBLIC
+class zcl_lab_27_factory_fjcm definition abstract
+  public
 "  FINAL
-  CREATE PUBLIC .
+  create public .
 
-  PUBLIC SECTION.
+  public section.
 
-    METHODS: merchandise_output RETURNING VALUE(rv_merchandise_output) TYPE string,
-             production_line ABSTRACT RETURNING VALUE(rv_production_line) TYPE string,
-             input_products ABSTRACT RETURNING VALUE(rv_input_products) TYPE string.
+    methods: merchandise_output returning value(rv_merchandise_output) type string,
+          production_line abstract returning value(rv_production_line) type string,
+            input_products abstract returning value(rv_input_products) type string.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
+  protected section.
+  private section.
+endclass.
 
 
 
-CLASS zcl_lab_27_factory_fjcm IMPLEMENTATION.
+class zcl_lab_27_factory_fjcm implementation.
 
-  METHOD merchandise_output.
-       rv_merchandise_output = 'merchandise_output' .
-  ENDMETHOD.
+  method merchandise_output.
+    rv_merchandise_output = 'merchandise_output' .
+  endmethod.
 
-ENDCLASS.
+endclass.

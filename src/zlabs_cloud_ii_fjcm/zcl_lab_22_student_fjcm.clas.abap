@@ -1,22 +1,20 @@
-CLASS zcl_lab_22_student_fjcm DEFINITION INHERITING FROM zcl_lab_21_classroom_fjcm
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class zcl_lab_22_student_fjcm definition inheriting from zcl_lab_21_classroom_fjcm
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+  public section.
 
-  METHODS: assign_student.
+    methods: assign_student.
 
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
+  protected section.
+  private section.
+endclass.
 
+class zcl_lab_22_student_fjcm implementation.
 
+  method assign_student.
+    data(lo_student) = new zcl_lab_21_classroom_fjcm( ).
+  endmethod.
 
-CLASS zcl_lab_22_student_fjcm IMPLEMENTATION.
-
-  METHOD assign_student.
-  DATA(lo_student) = NEW zcl_lab_21_classroom_fjcm( ).
-  ENDMETHOD.
-
-ENDCLASS.
+endclass.

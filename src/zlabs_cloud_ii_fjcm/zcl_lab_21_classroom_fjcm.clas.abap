@@ -1,14 +1,12 @@
-CLASS zcl_lab_21_classroom_fjcm DEFINITION
-  PUBLIC
+class zcl_lab_21_classroom_fjcm definition
+  public
 "  FINAL
-  CREATE PROTECTED . " Solo se puede instanciar desde la clase misma y clases hijas
+  create protected . " Solo se puede instanciar desde la clase misma y clases hijas
 
-  PUBLIC SECTION.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-ENDCLASS.
+  public section.
+  protected section.
+  private section.
+endclass.
 
-
-
-CLASS zcl_lab_21_classroom_fjcm IMPLEMENTATION.
-ENDCLASS.
+class zcl_lab_21_classroom_fjcm implementation.
+endclass.

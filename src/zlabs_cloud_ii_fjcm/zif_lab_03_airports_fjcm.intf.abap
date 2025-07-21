@@ -1,9 +1,7 @@
-INTERFACE zif_lab_03_airports_fjcm
-  PUBLIC .
+interface zif_lab_03_airports_fjcm
+  public .
 
-  METHODS: get_airports IMPORTING VALUE(iv_airport_id)  TYPE string
-                        RETURNING VALUE(rt_airports_id) TYPE /dmo/airport.
+  methods: get_airports importing value(iv_airport_id)  type string
+                        returning value(rt_airports_id) type /dmo/airport.
 
-
-
-ENDINTERFACE.
+endinterface.
