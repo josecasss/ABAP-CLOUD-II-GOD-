@@ -1,0 +1,135 @@
+@Metadata.layer: #CUSTOMER // Custom layer for customer-specific extensions
+
+@UI: { headerInfo: { typeName: 'Travel', // Main object name in the UI header  *Depends if its one travel or multiple to show
+                     typeNamePlural: 'Travels', // Plural name in the header
+                     title: { type: #STANDARD,  // Standard title type for UI
+                              value: 'TravelID' } }, // The header title will display TravelID
+
+       presentationVariant: [{ sortOrder: [{ by: 'TravelID', // Default sort by TravelID
+                                             direction: #DESC }] }] } // Sort in descending order
+
+annotate entity ztravel_c_fjcm with
+{
+// Giving properties for identification
+  @UI.facet: [{ id: 'TravelMasterData', // UI facet for grouping fields
+                purpose: #STANDARD, // Standard purpose for main data
+                type: #IDENTIFICATION_REFERENCE, // Identification type facet
+                label: 'Travel Master Data', // Display label in the UI
+                position: 10 }] // Position for facet order
+
+  @UI.hidden: true // Hide TravelUUID from all UI elements
+  
+  
+  TravelUUID;
+
+  @UI: { lineItem: [{ position: 10, // TravelID will be first column in the list
+                      importance: #HIGH, // High importance, always visible
+                      label: 'Travel ID' }, // Custom label in UI table
+
+                    { type: #FOR_ACTION, // Add Accept Travel action button in the list
+                      dataAction: 'acceptTravel',
+                      label: 'Accept Travel',
+                      position: 10 },
+
+                    { type: #FOR_ACTION, // Add Reject Travel action button
+                      dataAction: 'rejectTravel',
+                      label: 'Reject Travel',
+                      position: 20 },
+
+                    { type: #FOR_ACTION, // Button for applying discount
+                      dataAction: 'deductDiscount',
+                      label: 'Discount',
+                      position: 30 }],
+
+          selectionField: [{ position: 10 }], // TravelID used as a search field
+
+          identification: [{ position: 10 }, // TravelID in object page
+
+                            { type: #FOR_ACTION, // Accept Travel action in object page
+                              dataAction: 'acceptTravel',
+                              label: 'Accept Travel',
+                              position: 10 },
+
+                            { type: #FOR_ACTION, // Reject Travel action in object page
+                              dataAction: 'rejectTravel',
+                              label: 'Reject Travel',
+                              position: 20 },
+
+                            { type: #FOR_ACTION, // Discount action in object page
+                              dataAction: 'deductDiscount',
+                              label: 'Discount',
+                              position: 30 }] }
+  TravelID;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Agency_StdVH', // Value help for AgencyID
+                                                 element: 'AgencyID' },
+                                       useForValidation: true }]
+
+  @UI: { lineItem: [{ position: 20, // AgencyID as second column
+                      importance: #HIGH }], // Make it visible by default
+         selectionField: [{ position: 20 }], // Search field
+         identification: [{ position: 20 }] }
+  AgencyID;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Customer_StdVH', // Value help for CustomerID
+                                                 element: 'CustomerID' },
+                                       useForValidation: true }]
+
+  @UI: { lineItem: [{ position: 30, // Third column in the table
+                      importance: #HIGH }],
+         selectionField: [{ position: 30 }],
+         identification: [{ position: 30 }] }
+  CustomerID;
+
+  @UI: { lineItem: [{ position: 40, // Fourth column, medium importance
+                      importance: #MEDIUM }],
+         identification: [{ position: 40 }]}
+  BeginDate;
+
+  @UI: { lineItem: [{ position: 50, // Fifth column, EndDate
+                      importance: #MEDIUM }],
+         identification: [{ position: 50 }]}
+  EndDate;
+
+  @UI: { lineItem: [{ position: 60, // BookingFee, less important (LOW)
+                      importance: #LOW }],
+         identification: [{ position: 60 }]}
+  BookingFee;
+
+  @UI: { lineItem: [{ position: 70, // Total price, important column
+                      importance: #HIGH }],
+         identification: [{ position: 70 }]}
+  TotalPrice;
+
+  @UI: { lineItem: [{ position: 71, // Price with VAT, medium importance
+                      importance: #MEDIUM }],
+         identification: [{ position: 71 }]}
+  PriceWithVAT;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name : 'I_CurrencyStdVH', // Value help for CurrencyCode
+                                                 element: 'Currency' },
+                                       useForValidation: true }]
+  //    @UI.lineItem: [{ position: 80, // Uncomment if you want CurrencyCode as a column
+  //                     importance: #HIGH }]
+  //    @UI.identification: [{ position: 80 }]
+  CurrencyCode;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name : '/DMO/I_Overall_Status_VH', // Value help for status
+                                                 element: 'OverallStatus' }}]
+  @UI: { lineItem: [{ position: 90, // OverallStatus at the end of the list
+                      importance: #LOW }],
+         selectionField: [{ position: 40 }], // Search field
+         textArrangement: #TEXT_ONLY, // Show only the text, not the code
+         identification: [{ position: 60 }] }
+  OverallStatus;
+
+  @UI.hidden: true // Hide status text, only show code if needed
+  OverallStatusText;
+
+  @UI.hidden: true // Hide LastChangedAt timestamp
+  LastChangedAt;
+
+  @UI.hidden: true // Hide LocalLastChangedAt timestamp
+  LocalLastChangedAt;
+
+}
