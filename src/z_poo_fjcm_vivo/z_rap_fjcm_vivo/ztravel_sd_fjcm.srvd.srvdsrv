@@ -1,0 +1,4 @@
+@EndUserText.label: 'Travel - Service Definition'
+define service Ztravel_sd_fjcm {
+  expose ztravel_c_fjcm as Travel;
+}

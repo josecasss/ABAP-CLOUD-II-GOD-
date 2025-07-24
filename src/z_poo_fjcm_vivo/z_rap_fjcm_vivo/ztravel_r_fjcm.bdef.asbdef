@@ -1,0 +1,107 @@
+managed implementation in class zbp_travel_r_fjcm unique;
+strict ( 2 );  // Language version BDL
+with draft;
+
+define behavior for ztravel_r_fjcm alias Travel  // Root entity
+persistent table ztravel_fjcm_a                  // Aplication table
+draft table ztravel_fjcm_d                       // Draft table
+lock master //
+
+total etag LastChangedAt
+etag master LocalLastChangedAt
+
+authorization master ( global, instance )   // Authorization to operate just one or multiple(global) instances
+
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) TravelUUID; // UUID for the travel record numbering
+
+  field ( readonly ) TravelID,
+  OverallStatus,
+  TotalPrice,
+  LastChangedAt,
+  LocalCreatedAt,
+  LocalCreatedBy,
+  LocalLastChangedBy;
+
+  field ( features : instance ) BookingFee; //Instance here means registers   *If the booking fee change, other fields have to be updated as well
+
+  field ( mandatory ) CustomerID, AgencyID, BeginDate, EndDate, CurrencyCode;
+
+  action ( features : instance, authorization : update ) acceptTravel result [1] $self; //Result self *Cuando se acepta el viaje, se actualiza el estado y se crea un registro de viaje aceptado
+  action ( features : instance, authorization : update ) rejectTravel result [1] $self; //Result self *Cuando se rechaza el viaje, se actualiza el estado y se crea un registro de viaje rechazado
+
+  action ( features : instance, authorization : update ) deductDiscount
+    parameter ztravel_ae_disc_fjcm result [1] $self; //Result self *Cuando se aplica un descuento, se actualiza el estado y se crea un registro de descuento aplicado
+
+  internal action reCalcTotalPrice;
+
+  // Declarating methods
+
+  //Validations       *First we define validations, then determinations, and finally actions
+  validation validateCustomer on save { create; field CustomerID; } //Validates that the customer exists when saving the travel record
+  validation validateAgency on save { create; field AgencyID; }     //Validates that the agency exists when saving the travel record
+  validation validateDateRange on save { create; field BeginDate, EndDate; } //Validates that the date range is valid when saving the travel record
+
+  //Determinations
+  determination setTravelNumber on save { create; }  // Determines the travel number when saving the travel record
+  determination setStatusToOpen on modify { create; } // Sets the status to 'Open' when the travel record is created or modified
+  determination calculateTotalPrice on modify { create; field BookingFee, CurrencyCode; } // Calculates the total price when saving the travel record
+
+  //Actions
+
+  determine action validateCustomerID { validation validateCustomer; } // Action to validate the customer ID frome the validation already defined
+  determine action validateAgencyID { validation validateAgency; }
+  determine action validateDates { validation validateDateRange; }
+
+  // Side effects  *Efectos secundarios, Cada cambio (acción) puede tener repercusiones en otros datos, por eso declaramos los side effects
+  side effects
+  {
+    field BookingFee affects field TotalPrice; // BookingFee affects TotalPrice, so when BookingFee changes, TotalPrice is recalculated
+    determine action validateCustomerID executed on field CustomerID affects messages; // Validating CustomerID affects the CustomerID field
+    determine action validateAgencyID executed on field AgencyID affects messages; // Validating AgencyID affects the AgencyID field
+    determine action validateDates executed on field BeginDate, field EndDate affects messages; // Validating dates affects the BeginDate and EndDate fields
+
+  }
+
+  // Draft actions
+
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+
+  draft determine action Prepare
+  {
+    validation validateCustomer;
+    validation validateAgency;
+    validation validateDateRange;
+  }
+
+
+  mapping for ztravel_fjcm_a
+    {
+      TravelUUID         = travel_uuid;
+      TravelID           = travel_id;
+      AgencyID           = agency_id;
+      CustomerID         = customer_id;
+      BeginDate          = begin_date;
+      EndDate            = end_date;
+      BookingFee         = booking_fee;
+      TotalPrice         = total_price;
+      CurrencyCode       = currency_code;
+      Description        = description;
+      OverallStatus      = overall_status;
+      LocalCreatedBy     = local_created_by;
+      LocalCreatedAt     = local_created_at;
+      LocalLastChangedBy = local_last_changed_by;
+      LocalLastChangedAt = local_last_changed_at;
+      LastChangedAt      = last_changed_at;
+    }
+
+}
+
+// ROOT entity is for behavior definition
