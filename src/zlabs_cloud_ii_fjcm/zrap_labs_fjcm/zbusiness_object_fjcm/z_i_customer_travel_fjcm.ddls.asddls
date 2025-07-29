@@ -7,7 +7,7 @@ define root view entity Z_I_CUSTOMER_TRAVEL_FJCM
 
 {
   key CustomerUUID,
-  key CustomerId,
+  key CustomerID,
       Description,
       LocalCreatedBy,
       LocalCreatedAt,

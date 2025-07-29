@@ -29,7 +29,7 @@ class zcl_data_gen_rap_fjcm_lab implementation.
                       createdat     as aslocal_created_at,
                       lastchangedby as local_last_changed_by,
                       lastchangedat as local_last_changed_at
-                      where customer_id between 1 and 2000 ).
+                      where customer_id between 1 and 100 ).
 
     if sy-subrc eq 0.
       out->write( |Travel.... { sy-dbcnt } rows inserted | ).

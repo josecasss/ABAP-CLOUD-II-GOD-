@@ -1,0 +1,155 @@
+@Metadata.layer: #CORE  // The framework knows priority depends on the layer
+
+// 1. #CUSTOMER     *High Priority*
+// 2.
+// ...
+// 5. #CORE         *Low Priority*
+
+// Header Info
+@UI: { headerInfo : { typeName: 'Travel',          // One register
+                      typeNamePlural: 'Travels',   // Multiple register
+                      title: { type: #STANDARD,
+                               value: 'TravelID' } }, // Title of the register *Cuando entras en detalles del registro mostrara TravelID*
+                     presentationVariant: [{ sortOrder: [{ by: 'TravelID',      // Order of the register
+                                                           direction: #DESC }],
+                                                           visualizations: [{ type: #AS_LINEITEM }]  }] } // Visualizations of the register *Tipo de visualizacion del registro*
+
+
+annotate entity z_c_travel_fjcm with
+{
+  //@UI.lineItem: importance
+  //#HIGH   = Always visible (desktop, tablet, mobile)
+  //#MEDIUM = Visible on desktop and tablet, may be hidden on mobile if space is limited
+  //#LOW    = Only visible on desktop (hidden on tablet and mobile)
+  //This ensures your Fiori application is responsive on all devices,
+  //and displays only the most important information depending on screen size.
+
+  @UI.facet: [ { id: 'TravelMasterData',
+                 purpose: #STANDARD,
+                 type: #IDENTIFICATION_REFERENCE,
+                 label: 'Travel Master Data', // This is used to define name of the Facet in the Fiori application  *Cuando abres en detalles*
+                 position: 10 } ]
+                 
+                 
+  @UI.hidden: true  // This annotation is used to hide the field of TravelUUID in the Fiori application
+  TravelUUID;
+
+  @UI: { lineItem: [ { position :10 ,
+                    importance: #HIGH,
+                    label: 'Travel ID'   }, //If i dont defined the label, its gonna take the name of *DataElement*
+                    { type: #FOR_ACTION,    //Marks this field for action usage in Fiori
+                      dataAction: 'acceptTravel', // Name of the action METHOD
+                      label: 'Accept Travel', // Label of the action in the Fiori application
+                      position: 10 },
+                    { type: #FOR_ACTION,    
+                      dataAction: 'rejectTravel', 
+                      label: 'Reject Travel', 
+                      position: 20 },
+                    { type: #FOR_ACTION,    
+                      dataAction: 'deductDiscount', 
+                      label: 'Discount', 
+                      position: 30 }],
+         selectionField: [{ position: 10 }],   // Selection fields are used in the filter bar of the Fiori application
+         identification: [{ position: 10 },    //Identification is used in the details of the Fiori application *Details of the instance*
+         //Replicate this here to add the actions in the identification facet (:
+                         { type: #FOR_ACTION,    
+                           dataAction: 'accepTravel', 
+                           label: 'Accept Travel',
+                           position: 10 },
+                         { type: #FOR_ACTION,    
+                           dataAction: 'rejectTravel', 
+                           label: 'Reject Travel', 
+                           position: 20 },
+                         { type: #FOR_ACTION,    
+                           dataAction: 'deductDiscount', 
+                           label: 'Discount', 
+                           position: 30 } ] } 
+  TravelID;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Agency_StdVH', // This is the value help definition for the AgencyID field
+                                                 element: 'AgencyID' },      // This element is the one that will be used in the value help
+                                                 useForValidation: true }]   // This is used to validate the AgencyID field exits
+  @UI: { lineItem: [ { position :20 ,
+                    importance: #HIGH,
+                    label: 'AgencyID'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
+         selectionField: [{ position: 20 }],
+         identification: [{ position: 20 }] } // Position 20 in the identification facet  *Instance Details* in the Fiori application
+
+  AgencyID;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Customer_StdVH', // This is the value help definition for the AgencyID field
+                                             element: 'CustomerID' },        // This element is the one that will be used in the value help
+                                             useForValidation: true }]     // This is used to validate
+  @UI: { lineItem: [ { position : 30 ,
+                    importance: #HIGH,
+                    label: 'CustomerID'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
+         selectionField: [{ position: 30 }],   // Selection fields are used in the filter bar of the Fiori application
+         identification: [{ position: 30 } ] } // Position 20 in the identification facet  *Instance Details* in the Fiori application *The label is from the DataElement*
+
+  CustomerID;
+
+  @UI:  { lineItem: [ { position :40 ,
+                    importance: #MEDIUM,
+                    label: 'Begin Date' }],
+                    identification: [{ position:40 }]}   // Position 40 in the identification facet  *Instance Details* in the Fiori application
+
+  BeginDate;
+
+  @UI:  { lineItem: [ { position :50 ,
+                    importance: #MEDIUM,
+                    label: 'End Date' }],
+                    identification: [{ position:50 }]}   // Position 50 in the identification facet  *Instance Details* in the Fiori application
+
+  EndDate;
+
+  @UI:  { lineItem: [ { position :60 ,
+                      importance: #LOW,
+                      label: 'Bookin Fee' }],
+                      identification: [{ position:60 }]} // Position 60 in the identification facet  *Instance Details* in the Fiori application
+
+  BookingFee;
+
+  @UI:  { lineItem: [ { position :70 ,
+                    importance: #HIGH,
+                    label: 'Total Price' }],
+                    identification: [{ position:70 }]} // Position 70 in the identification facet  *Instance Details* in the Fiori application
+
+
+  TotalPrice;
+ 
+ // Im not using the line item annotation here, because the field is already in the fields Total price and Booking Fee with the * PROPAGATION* declared in the CDS
+ 
+//  @UI: { lineItem: [ { position :80 ,
+//                   importance: #HIGH,
+//                   label: 'Currency Code'   }],
+//                   identification: [{ position:80 }]}        // Position 80 in the identification facet  *Instance Details* in the Fiori application
+                  
+  @Consumption.valueHelpDefinition: [{ entity: { name:'I_CurrencyStdVH', // This is the value help definition for the AgencyID field
+                                                element: 'Currency' },        // This element is the one that will be used in the value help
+                                                useForValidation: true }]     // This is used to validate
+
+  CurrencyCode;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Overall_Status_VH',      
+                                                 element: 'OverallStatus' },             
+                                                 useForValidation: true }]          
+  @UI: { lineItem: [ { position :90 ,
+                   importance: #HIGH,
+                   label: 'OverAllStatus'   } ],   //If i dont defined the label, its gonna take the name of *DataElement*
+         selectionField: [{ position:40 }], // Selection fields are used in the filter bar of the Fiori application *Here is 40, to follow the order of selection fields*
+         textArrangement: #TEXT_ONLY, // Text arrangement is used to define how the text is displayed in the Fiori application
+         identification: [{ position:90 }]}  // Position 90 in the identification facet  *Instance Details* in the Fiori application
+
+  OverallStatus;
+  
+  @UI.hidden: true  // This annotation is used to hide the field in the Fiori application
+  OverallStatusText;
+  
+  @UI.hidden: true  // This annotation is used to hide the field in the Fiori application
+  LastChangedAt;
+  
+  @UI.hidden: true  // This annotation is used to hide the field  in the Fiori application
+  LocalLastChangedAt;
+}
+
+// Made by the consumption CDS

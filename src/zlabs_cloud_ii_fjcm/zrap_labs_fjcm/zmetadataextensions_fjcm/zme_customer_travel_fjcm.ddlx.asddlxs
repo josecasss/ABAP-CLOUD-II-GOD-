@@ -1,0 +1,68 @@
+@Metadata.layer: #INDUSTRY
+@UI: { headerInfo : { typeName: 'Customer',          // One register
+                      typeNamePlural: 'Customers',   // Multiple register
+                      title: { type: #STANDARD,
+                               value: 'CustomerID' } }, // Title of the register *Cuando entras en detalles del registro mostrara TravelID*
+                     presentationVariant: [{ sortOrder: [{ by: 'CustomerID',      // Order of the register
+                                                           direction: #ASC }],
+                                                           visualizations: [{ type: #AS_LINEITEM }]  }] } // Visualizations of the register *Tipo de visualizacion del registro*
+annotate entity Z_C_CUSTOMER_TRAVEL_FJCM with
+{
+  @UI.facet: [ { id: 'CustomerDetails',
+               purpose: #STANDARD,
+               type: #IDENTIFICATION_REFERENCE,
+               label: 'Customer Details',       // This is used to define name of the Facet in the Fiori application  *Cuando abres en detalles*
+               position:10 } ]
+
+  CustomerUUID;
+
+  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Customer_StdVH', // This is the value help definition for the AgencyID field
+                                               element: 'LastName' },        // This element is the one that will be used in the value help
+                                               useForValidation: true }]     // This is used to validate
+  @UI: { lineItem:    [ { position :10 ,
+                        importance: #HIGH,
+                        label: 'CustomerID'   },
+                      { type: #FOR_ACTION,    //Marks this field for action usage in Fiori
+                        dataAction: 'acceptCustomer', // Name of the action *METHOD*
+                        label: 'Accept Customer', // Label of the action in the Fiori application
+                        position: 10 },
+                      { type: #FOR_ACTION,    
+                        dataAction: 'rejectCustomer', 
+                        label: 'Reject Customer', 
+                        position: 20 } ],
+       selectionField: [{ position:10 }], // //Selection fields are used in the filter bar of the Fiori application
+       textArrangement: #TEXT_ONLY,  //Text arrangement is used to define how the text is displayed in the Fiori application  *
+       identification: [{ position:10 }, //Identification is used in the details of the Fiori application *Details of the instance*
+                       { type: #FOR_ACTION,    
+                         dataAction: 'acceptCustomer', 
+                         label: 'Accept Customer', 
+                         position: 10 },
+                       { type: #FOR_ACTION,    
+                         dataAction: 'rejectCustomer', 
+                         label: 'Reject Customer', 
+                         position: 20 } ] }
+  CustomerID;
+
+  @UI: { lineItem: [ { position :20 ,
+                      importance: #HIGH,
+                      label: 'CustomerName ID'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
+           identification: [{ position:20 }] } // Position 10 in the identification facet  *Instance Details* in the Fiori application
+
+  CustomerName;
+
+  @UI: { lineItem: [ { position :30 ,
+                      importance: #HIGH,
+                      label: 'Customer Country'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
+           identification: [{ position:30 }] } // Position 10 in the identification facet  *Instance Details* in the Fiori application
+
+  CustomerCountry;
+
+  @UI: { lineItem: [ { position :40 ,
+                       importance: #HIGH,
+                       label: 'Description'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
+            identification: [{ position:40 }] } // Position 10 in the identification facet  *Instance Details* in the Fiori application
+  
+  @UI.hidden: true  // This annotation is used to hide the field in the Fiori application
+  
+  Description;
+}

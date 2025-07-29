@@ -2,10 +2,10 @@
 @EndUserText.label: 'LAB 02 Customers Root Entity'
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity Z_R_CUSTOMER_TRAVEL_FJCM as select from zcustomers_fjcm
-association [0..1] to /DMO/I_Customer as _Customer on _Customer.CustomerID = $projection.CustomerId
+association [0..1] to /DMO/I_Customer as _Customer on _Customer.CustomerID = $projection.CustomerID
 {
     key customer_uuid as CustomerUUID,
-    key customer_id as CustomerId,
+    key customer_id as CustomerID,
     description as Description,
     @Semantics.user.createdBy: true
     local_created_by as LocalCreatedBy,
