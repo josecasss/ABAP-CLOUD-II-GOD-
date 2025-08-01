@@ -1,0 +1,4 @@
+@EndUserText.label: 'Customer - Service Definition'
+define service ZSD_CUSTOMER_TRAVEL_FJCM {
+  expose Z_C_CUSTOMER_TRAVEL_FJCM as CustomerTravel;
+}

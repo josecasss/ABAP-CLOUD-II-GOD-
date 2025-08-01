@@ -1,0 +1,100 @@
+managed implementation in class zbp_r_travel_fjcm unique;
+strict ( 2 ); // BDL version 2.0 mandatory if is strict(2) is used
+with draft;
+
+define behavior for z_r_travel_fjcm alias Customer
+persistent table ztravel_fjcm
+draft table ztravel_fjcmd
+lock master // RAP handles locking at root entity level to ensure data consistency; no manual locking needed
+total etag LastChangedAt       //Total Etag from the root entity
+etag master LocalLastChangedAt //Local Etag
+authorization master ( global,instance ) // RAP checks global and per *instances* authorizations
+
+{
+  create ( authorization : global );
+  update;
+  delete;
+
+  field ( numbering : managed, readonly ) TravelUUID;  // RAP generate UUIDs automatically
+
+  field ( readonly ) TravelID,
+                     OverallStatus,
+                     TotalPrice,
+                     LastChangedAt,
+                     LocalCreatedAt,
+                     LocalCreatedBy,
+                     LocalLastChangedAt,
+                     LocalLastChangedBy;
+
+  field ( mandatory ) AgencyID,
+                      CustomerID,
+                      BeginDate,
+                      EndDate,
+                      CurrencyCode;
+
+  action ( features : instance, authorization : update )acceptTravel result [1] $self; //Action to accept the travel and update its status accordingly
+  action ( features : instance, authorization : update )rejectTravel result [1] $self; //Features instance *Enables per-record(instance) action availability based in status*
+  // Dinamics Features
+  action ( features : instance, authorization : update ) deductDiscount // Instance-specific action to apply a discount and update the total price
+           parameter z_ae_travel_discount_fjcm result [1] $self; //Discount parameter defined in the abstract CDS view
+
+  internal action reCaclTotalPrice; // Internal actio hidden for the user interface
+
+  //Validations  *Works in save and create*
+
+  validation validateCustomer on save { create; field CustomerID; } //Validation to ensure CustomerID is provided on save *Check if the Customer is already created*
+  validation validateAgency on save { create; field AgencyID; }
+  validation validateDateRange on save { create; field BeginDate,EndDate; }
+
+  //Determinations  *Determinations are used to set values automatically based on business logic
+  determination setTravelNumber on save { create; }
+  determination setStatusToOpen on modify { create; }
+  determination calculateTotalPrice on modify { create; field BookingFee, CurrencyCode; } //Calculates TotalPrice when BookingFee or CurrencyCode change
+
+  //Determine Actions
+  determine action validateCustomerID { validation validateCustomer; } //Determination to validate CustomerID, declared in the validations
+  determine action validateAgencyID { validation validateAgency; }
+  determine action validateDates { validation validateDateRange; }
+
+
+  //Side Effects  *Efectos Secundarios*
+  side effects {
+                 field BookingFee affects field TotalPrice;  //If changes BookingFee, TotalPrice is affected
+                 determine action validateCustomerID executed on field CustomerID affects messages; //Updates messages after running validateCustomerID on changes to CustomerID
+                 determine action validateAgencyID executed on field AgencyID affects messages;
+                 determine action validateDates executed on field BeginDate, field EndDate affects messages;
+                }
+
+  //Draft Handling
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+
+  draft determine action Prepare{  // Validation to ensure the draft is prepared before activation
+        validation validateCustomer;
+        validation validateAgency;
+        validation validateDateRange;
+        }
+  //Persitent Mapping
+  mapping for ztravel_fjcm {  //Mapping fields from the root to the persistent table *alt+shift+a* To copy all fields
+
+    TravelUUID          = travel_uuid;
+    TravelID            = travel_id;
+    AgencyID            = agency_id;
+    CustomerID          = customer_id;
+    BeginDate           = begin_date;
+    EndDate             = end_date;
+    BookingFee          = booking_fee;
+    TotalPrice          = total_price;
+    CurrencyCode        = currency_code;
+    Description         = description;
+    OverallStatus       = overall_status;
+    LocalCreatedBy      = local_created_by;
+    LocalCreatedAt      = local_created_at;
+    LocalLastChangedBy  = local_last_changed_by;
+    LocalLastChangedAt  = local_last_changed_at;
+    LastChangedAt       = last_changed_at;
+  }
+
+}

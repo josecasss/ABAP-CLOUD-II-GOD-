@@ -1,0 +1,62 @@
+managed implementation in class zbp_r_customer_travel_fjcm unique; //Managed implementation
+strict ( 2 );
+with draft;
+
+define behavior for Z_R_CUSTOMER_TRAVEL_FJCM alias Travel
+persistent table zcustomers_fjcm
+draft table zcustomers_d_fjc
+lock master // RAP handles locking at root entity level to ensure data consistency; no manual locking needed
+total etag LastChangedAt
+etag master LocalLastChangedAt
+authorization master ( global,instance ) // RAP checks global and per *instances* authorizations
+{
+  create ( authorization : global );
+  update;
+  delete;
+  field ( numbering : managed, readonly ) CustomerUUID;  // RAP generate UUIDs automatically
+  field ( readonly ) Description;
+  field ( mandatory ) CustomerID;
+
+  //Actions
+  action ( features : global, authorization : update )acceptCustomer result [1] $self;
+  action ( features : global, authorization : update )rejectCustomer result [1] $self;
+
+  //Validations *Works on save or create register(instance)*
+  validation validateCustomer on save { create; field CustomerID; } //Validation to ensure CustomerID is provided on save *Check if the Customer is already created*
+
+  //Determinations
+  determination setDescription on save { create; field Description; } //Determination to set the Description field on save based on CustomerID
+
+  //Determine actions
+  determine action validateCustomerFormat { validation validateCustomer; } //Determination to validate the format of CustomerID
+
+
+  //Side Effects
+  side effects {
+                 field CustomerID affects field description;
+                 determine action validateCustomerFormat executed on field CustomerID affects messages;
+               }
+
+  //Draft Handling
+  draft action Resume;
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+
+  draft determine action Prepare{  // Validation to ensure the draft is prepared before activation
+        validation validateCustomer;
+        }
+
+  //Persistent Mapping
+  mapping for zcustomers_fjcm {
+
+  CustomerUUID            =   customer_uuid;
+  CustomerID              =   customer_id;
+  Description             =   description;
+  LocalCreatedBy          =   local_created_by;
+  LocalCreatedAt          =   local_created_at;
+  LocalLastChangedBy      =   local_last_changed_by;
+  LocalLastChangedAt      =   local_last_changed_at;
+  LastChangedAt           =   last_changed_at;
+ }
+}

@@ -3,7 +3,7 @@
 @Metadata.ignorePropagatedAnnotations: true
 
 @Search.searchable: true                   // ***TO ACTIVATE ADVANCED SEARCH FUNCTIONALITY***  
-@Metadata.allowExtensions: true          // Allow extensions to this view entity
+@Metadata.allowExtensions: true            // Allow extensions to this view entity
 
              
 define root view entity z_c_travel_fjcm
@@ -36,6 +36,7 @@ provider contract transactional_query    // This view is used for transactional 
       CurrencyCode,
       Description,
       
+      @ObjectModel.text.element: ['OverallStatusText'] // To show the text representation of the status
       OverallStatus,
         _OverallStatus._Text.Text as OverallStatusText : localized, // Better way to do it so the system can handle the text depending on the language
 //      _OverallStatus._Text[1: Language = $session.system_language].Text as OverallStatusText, //Reduce cardinality to 1 
@@ -52,4 +53,3 @@ provider contract transactional_query    // This view is used for transactional 
 }
 
 //Made it by template define view entity
-//In projection its not allowed to use functions for example concatwithspace, if its need it must be used in the ROOT VIEW ENTITY
