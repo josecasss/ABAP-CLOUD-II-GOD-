@@ -1,11 +1,4 @@
-interface zif_final_project_ii_fjcm
+interface ZIF_FINAL_PROJECT_II_FJCM
   public .
-
-  METHODS: clean_tables,
-           generate_priorities,
-           generate_statuses,
-           generate_incidents.
-
-
 
 endinterface.

@@ -1,21 +1,13 @@
-CLASS zcl_23_passenger_plane_fjcm DEFINITION
-  PUBLIC
-  INHERITING FROM zcl_21_airplane_fjcm
-  FINAL
-  CREATE PUBLIC .
+class ZCL_23_PASSENGER_PLANE_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-  methods: airplane_type REDEFINITION.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_23_passenger_plane_fjcm IMPLEMENTATION.
-
-  METHOD airplane_type.
-  rv_airline_type = 'Passenger Plane'.
-  ENDMETHOD.
-
+CLASS ZCL_23_PASSENGER_PLANE_FJCM IMPLEMENTATION.
 ENDCLASS.

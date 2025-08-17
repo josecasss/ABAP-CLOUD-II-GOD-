@@ -1,16 +1,13 @@
-CLASS zcl_21_airplane_fjcm DEFINITION ABSTRACT
-  PUBLIC
-"  FINAL
-  CREATE PUBLIC .
+class ZCL_21_AIRPLANE_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-    METHODS: airplane_type ABSTRACT RETURNING VALUE(rv_airline_type) TYPE string.
-
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_21_airplane_fjcm IMPLEMENTATION.
+CLASS ZCL_21_AIRPLANE_FJCM IMPLEMENTATION.
 ENDCLASS.

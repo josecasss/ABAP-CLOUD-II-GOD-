@@ -1,19 +1,13 @@
-class zcl_lab_24_partner_fjcm definition
+class ZCL_LAB_24_PARTNER_FJCM definition
   public
-"  FINAL
-  create public .
+  create private .
 
-  public section.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
-    methods: get_company_capital returning value(rv_company_capital) type string.
-  protected section.
-  private section.
-endclass.
 
-class zcl_lab_24_partner_fjcm implementation.
 
-  method get_company_capital.
-    data(company_capital) = new zcl_lab_23_company_fjcm( ).
-    rv_company_capital = company_capital->capital.
-  endmethod.
-endclass.
+CLASS ZCL_LAB_24_PARTNER_FJCM IMPLEMENTATION.
+ENDCLASS.

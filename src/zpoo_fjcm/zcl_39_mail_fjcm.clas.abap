@@ -1,23 +1,13 @@
-class zcl_39_mail_fjcm definition
+class ZCL_39_MAIL_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-
-  class-events new_mail exporting value(ev_subject) type string.
-
-  class-methods compose_mail.
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_39_mail_fjcm implementation.
-
-  method compose_mail.
-  raise event new_mail exporting ev_subject = |ABAP DEVELOPER JOB OFFER: { cl_abap_context_info=>get_system_time(  ) }|.
-  endmethod.
-
-endclass.
+CLASS ZCL_39_MAIL_FJCM IMPLEMENTATION.
+ENDCLASS.

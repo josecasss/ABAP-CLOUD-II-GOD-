@@ -1,20 +1,13 @@
-CLASS zcl_34_product_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_34_PRODUCT_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-  METHODS return_category RETURNING VALUE(rv_category) TYPE string.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-  data: category type string VALUE 'A5'.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_34_product_fjcm IMPLEMENTATION.
-  METHOD return_category.
-rv_category = me->category.
-  ENDMETHOD.
-
+CLASS ZCL_34_PRODUCT_FJCM IMPLEMENTATION.
 ENDCLASS.

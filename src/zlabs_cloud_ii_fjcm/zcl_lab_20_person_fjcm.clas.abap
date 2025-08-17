@@ -1,20 +1,13 @@
-class zcl_lab_20_person_fjcm definition
+class ZCL_LAB_20_PERSON_FJCM definition
   public
-"  CREATE PRIVATE. "Solo la misma clase puede crear instancias
-create public.
-  public section.
-  protected section.
+  create private .
 
-    data: name type string.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
-    methods: set_name final importing iv_name type string.
 
-  private section.
-endclass.
 
-class zcl_lab_20_person_fjcm implementation.
-  method set_name.
-
-  endmethod.
-
-endclass.
+CLASS ZCL_LAB_20_PERSON_FJCM IMPLEMENTATION.
+ENDCLASS.

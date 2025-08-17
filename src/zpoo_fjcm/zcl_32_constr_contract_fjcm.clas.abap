@@ -1,21 +1,13 @@
-CLASS zcl_32_constr_contract_fjcm DEFINITION
-  PUBLIC
-"  FINAL
-  CREATE PUBLIC .
+class ZCL_32_CONSTR_CONTRACT_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES zif_09_contract_fjcm .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_32_constr_contract_fjcm IMPLEMENTATION.
-
-
-  METHOD zif_09_contract_fjcm~create_contract.
-  me->zif_09_contract_fjcm~contract_type = iv_ctnr_type.
-  ENDMETHOD.
+CLASS ZCL_32_CONSTR_CONTRACT_FJCM IMPLEMENTATION.
 ENDCLASS.

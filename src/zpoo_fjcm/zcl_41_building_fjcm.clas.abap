@@ -1,25 +1,13 @@
-class zcl_41_building_fjcm definition
+class ZCL_41_BUILDING_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-
-    events blocked_entrance exporting value(ev_entry) type string.
-
-    methods: close_entry.
-    data: entry type string.
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_41_building_fjcm implementation.
-
-  method close_entry.
-  raise event blocked_entrance exporting ev_entry = me->entry.
-  endmethod.
-
-
-endclass.
+CLASS ZCL_41_BUILDING_FJCM IMPLEMENTATION.
+ENDCLASS.

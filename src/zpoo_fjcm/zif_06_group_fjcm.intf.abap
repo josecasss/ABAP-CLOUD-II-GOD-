@@ -1,5 +1,4 @@
-INTERFACE zif_06_group_fjcm
-  PUBLIC .
-  METHODS: set_group.
+interface ZIF_06_GROUP_FJCM
+  public .
 
-ENDINTERFACE.
+endinterface.

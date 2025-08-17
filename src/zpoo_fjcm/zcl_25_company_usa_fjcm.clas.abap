@@ -1,21 +1,13 @@
-CLASS zcl_25_company_usa_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_25_COMPANY_USA_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-    INTERFACES zif_08_co_company_fjcm .
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_25_company_usa_fjcm IMPLEMENTATION.
-
-
-  METHOD zif_08_co_company_fjcm~define_company.
-  rv_company = 'Company USA 01'.
-  ENDMETHOD.
+CLASS ZCL_25_COMPANY_USA_FJCM IMPLEMENTATION.
 ENDCLASS.

@@ -1,25 +1,13 @@
-class zcl_40_smtp_fjcm definition
+class ZCL_40_SMTP_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-
-  class-methods: on_new_mail for event new_mail of zcl_39_mail_fjcm
-                 importing ev_subject.
-
-  class-data  table_inbox type table of string.
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_40_smtp_fjcm implementation.
-
-  method on_new_mail.
-  append ev_subject to table_inbox. "Añade el asunto del correo a la bandeja de entrada
-
-  endmethod.
-
-endclass.
+CLASS ZCL_40_SMTP_FJCM IMPLEMENTATION.
+ENDCLASS.

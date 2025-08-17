@@ -1,24 +1,13 @@
-class zcl_37_american_bank_fjcm definition
+class ZCL_37_AMERICAN_BANK_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-  interfaces zif_10_bank_fjcm. "Interfaz de un evento
-
-  methods: create_notification returning value(rv_text) type string.
-
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_37_american_bank_fjcm implementation.
-
-  method create_notification.
-  rv_text = |Event raise..... new transfer - { cl_abap_context_info=>get_system_time(  ) }| .
-  raise event zif_10_bank_fjcm~new_transfer. " Declaracion del evento
-  endmethod.
-
-endclass.
+CLASS ZCL_37_AMERICAN_BANK_FJCM IMPLEMENTATION.
+ENDCLASS.

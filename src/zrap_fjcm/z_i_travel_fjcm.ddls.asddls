@@ -2,7 +2,7 @@
 @EndUserText.label: 'Travel - Interface'
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity Z_I_TRAVEL_FJCM //Agregar root
-  provider contract transactional_interface  // Contract for transactional interface
+  provider contract transactional_interface  // Contract for transactional interface RE USE
   as projection on z_r_travel_fjcm
 {
   key TravelUUID,

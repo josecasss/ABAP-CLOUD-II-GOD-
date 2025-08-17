@@ -1,24 +1,13 @@
-class zcl_lab_25_collaborator_fjcm definition inheriting from zcl_lab_24_partner_fjcm
+class ZCL_LAB_25_COLLABORATOR_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
-    methods: get_capital returning value(rv_capital) type string.
 
-  protected section.
-  private section.
-endclass.
 
-class zcl_lab_25_collaborator_fjcm implementation.
-
-  method get_capital.
-
-    data(lo_capital) = new zcl_lab_23_company_fjcm( ).
-
-    rv_capital = lo_capital->capital.
-
-  endmethod.
-
-endclass.
+CLASS ZCL_LAB_25_COLLABORATOR_FJCM IMPLEMENTATION.
+ENDCLASS.

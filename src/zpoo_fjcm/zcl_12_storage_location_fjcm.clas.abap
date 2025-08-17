@@ -1,26 +1,13 @@
-CLASS zcl_12_storage_location_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC
-  GLOBAL FRIENDS zcl_11_plant_fjcm. "Clase amiga para acceder a los atributos privados
+class ZCL_12_STORAGE_LOCATION_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
-
-  data product type string.
-  methods set_product importing value(iv_product) type string.
-
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_12_storage_location_fjcm IMPLEMENTATION.
-
-  METHOD set_product.
-
-  product = iv_product.
-
-  ENDMETHOD.
-
+CLASS ZCL_12_STORAGE_LOCATION_FJCM IMPLEMENTATION.
 ENDCLASS.

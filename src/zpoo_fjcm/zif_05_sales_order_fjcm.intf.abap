@@ -1,7 +1,4 @@
-INTERFACE zif_05_sales_order_fjcm
-  PUBLIC .
-  interfaces zif_04_document_fjcm.  "Anidando interface
+interface ZIF_05_SALES_ORDER_FJCM
+  public .
 
-  methods: create_order importing iv_order_id TYPE string.
-
-ENDINTERFACE.
+endinterface.

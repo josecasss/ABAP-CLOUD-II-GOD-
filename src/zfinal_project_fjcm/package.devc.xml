@@ -4,6 +4,8 @@
   <asx:values>
    <DEVC>
     <CTEXT>Final Project ABAP CLOUD II</CTEXT>
+    <LANGUAGE>E</LANGUAGE>
+    <MASTERLANG>E</MASTERLANG>
    </DEVC>
   </asx:values>
  </asx:abap>

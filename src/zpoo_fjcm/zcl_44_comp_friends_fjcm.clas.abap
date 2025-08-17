@@ -1,23 +1,13 @@
-class zcl_44_comp_friends_fjcm definition
+class ZCL_44_COMP_FRIENDS_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-
-  methods get_helper.
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_44_comp_friends_fjcm implementation.
-
-  method get_helper.
-  data(lo_components) = NEW zcl_43_components_fjcm( ).
-   data(ls_first) = lo_components->mo_helper->get_first( ).
-   lo_components->get_first( ).
-  endmethod.
-
-endclass.
+CLASS ZCL_44_COMP_FRIENDS_FJCM IMPLEMENTATION.
+ENDCLASS.

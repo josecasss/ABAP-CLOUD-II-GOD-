@@ -1,16 +1,13 @@
-CLASS zcl_31_vat_indicator_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_31_VAT_INDICATOR_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-
-  data: vat_indicator type string.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_31_vat_indicator_fjcm IMPLEMENTATION.
+CLASS ZCL_31_VAT_INDICATOR_FJCM IMPLEMENTATION.
 ENDCLASS.

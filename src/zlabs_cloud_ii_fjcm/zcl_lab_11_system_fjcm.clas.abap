@@ -1,23 +1,13 @@
-class zcl_lab_11_system_fjcm definition
+class ZCL_LAB_11_SYSTEM_FJCM definition
   public
-"  FINAL
-  create public .
+  create private .
 
-  public section.
-    data: architecture type string value '64bits'.
-
-    methods: get_architecture returning value(ev_architecture) type string.
-
-
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
 
-class zcl_lab_11_system_fjcm implementation.
-  method get_architecture.
-    ev_architecture = me->architecture.
-  endmethod.
-
-endclass.
+CLASS ZCL_LAB_11_SYSTEM_FJCM IMPLEMENTATION.
+ENDCLASS.

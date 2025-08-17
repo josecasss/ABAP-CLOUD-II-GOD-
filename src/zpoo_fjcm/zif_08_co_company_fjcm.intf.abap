@@ -1,6 +1,4 @@
-INTERFACE zif_08_co_company_fjcm
-  PUBLIC .
-  METHODS: define_company RETURNING VALUE(rv_company) TYPE string.
+interface ZIF_08_CO_COMPANY_FJCM
+  public .
 
-
-ENDINTERFACE.
+endinterface.

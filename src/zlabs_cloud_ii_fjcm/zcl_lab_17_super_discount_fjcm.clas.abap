@@ -1,20 +1,13 @@
-class zcl_lab_17_super_discount_fjcm definition inheriting from zcl_lab_15_flight_price_fjcm
+class ZCL_LAB_17_SUPER_DISCOUNT_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-    methods: add_price redefinition.
-  protected section.
-  private section.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
 
-class zcl_lab_17_super_discount_fjcm implementation.
 
-  method add_price.
-    data(ls_super_discounted) = iv_add_price.
-    ls_super_discounted-price *= '0.80'.
-    mt_flights = value #( base mt_flights ( ls_super_discounted ) ).
-  endmethod.
 
-endclass.
+CLASS ZCL_LAB_17_SUPER_DISCOUNT_FJCM IMPLEMENTATION.
+ENDCLASS.

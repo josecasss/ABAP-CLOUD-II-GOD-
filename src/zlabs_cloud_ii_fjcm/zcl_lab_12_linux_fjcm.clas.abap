@@ -1,14 +1,13 @@
-class zcl_lab_12_linux_fjcm definition inheriting from zcl_lab_11_system_fjcm
+class ZCL_LAB_12_LINUX_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-  protected section.
-  private section.
-endclass.
-
+public section.
+protected section.
+private section.
+ENDCLASS.
 
 
-class zcl_lab_12_linux_fjcm implementation.
-endclass.
+
+CLASS ZCL_LAB_12_LINUX_FJCM IMPLEMENTATION.
+ENDCLASS.

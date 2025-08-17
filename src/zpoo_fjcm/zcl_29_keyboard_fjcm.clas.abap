@@ -1,15 +1,13 @@
-CLASS zcl_29_keyboard_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_29_KEYBOARD_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-  data keyboard_type type string.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
-CLASS zcl_29_keyboard_fjcm IMPLEMENTATION.
+CLASS ZCL_29_KEYBOARD_FJCM IMPLEMENTATION.
 ENDCLASS.

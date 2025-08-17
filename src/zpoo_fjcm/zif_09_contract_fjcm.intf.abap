@@ -1,8 +1,4 @@
-INTERFACE zif_09_contract_fjcm
-  PUBLIC .
+interface ZIF_09_CONTRACT_FJCM
+  public .
 
-  data: contract_type TYPE string.
-
-  methods: create_contract importing iv_ctnr_type type string.
-
-ENDINTERFACE.
+endinterface.
