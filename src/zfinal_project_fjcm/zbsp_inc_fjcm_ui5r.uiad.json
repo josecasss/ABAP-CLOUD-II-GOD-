@@ -1,0 +1,34 @@
+{
+  "formatVersion": "2",
+  "header": {
+    "description": "Incidents Managment",
+    "originalLanguage": "en",
+    "abapLanguageVersion": "cloudDevelopment"
+  },
+  "generalInformation": {
+    "appType": "ui5",
+    "catalogId": "SAP_TC_UI5_REPO_UIAD",
+    "targetMappingTitle": "Incidents Managment"
+  },
+  "ui5AppDetails": {
+    "appId": "fjcm.incident"
+  },
+  "navigation": {
+    "targetMappingId": "UI5R_8F11CBDC02973A1BFAECCB5C7D2218F871000EED_TM",
+    "semanticObject": "Incidents",
+    "action": "Manage",
+    "desktop": true,
+    "tablet": true,
+    "phone": true
+  },
+  "tiles": [
+    {
+      "id": "UI5R_8F11CBDC02973A1BFAECCB5C7D2218F871000EED_AL",
+      "tileType": "static",
+      "isDefault": true,
+      "standard": {
+        "title": "Incidents Managment"
+      }
+    }
+  ]
+}
