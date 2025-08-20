@@ -1,5 +1,6 @@
 @EndUserText.label: 'Incidents - Service Definition'
 define service Z_SD_INCIDENTS_FJCM {
-  expose z_c_inct_fjcm   as Incidents;
-  expose Z_C_INCT_H_FJCM as IncidentsHistory;
+  expose z_c_inct_fjcm                 as Incidents;
+  expose Z_C_INCT_H_FJCM               as IncidentsHistory;
+  expose Z_C_ATTACHMENT_INCIDENTS_FJCM as Attachments;
 }

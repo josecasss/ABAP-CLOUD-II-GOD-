@@ -23,8 +23,14 @@ annotate view z_c_inct_fjcm with
                 type:          #LINEITEM_REFERENCE,         // Type of facet
                 label:         'History',
                 position:      20,
-                targetElement: '_History'}]                 // Target element for the facet with the associated line item               
-  
+                targetElement: '_History'},                 // Target element for the facet with the associated line item               
+                { id:            'Attachments',             
+                purpose:       #STANDARD,
+                type:          #LINEITEM_REFERENCE,
+                label:         'Attachments',
+                position:      30,
+                targetElement: '_Attachments'}]          // Target element for the facet with the associated line item               
+                       
   @UI: {lineItem: [{ position: 10,
                   importance: #HIGH,                        // High importance according to requirements
                   label: 'IncUUID'},
@@ -148,4 +154,7 @@ annotate view z_c_inct_fjcm with
 
   @UI.hidden: true
   _History;
+  
+  @UI.hidden: true                                        
+  _Attachments;                                           
 }

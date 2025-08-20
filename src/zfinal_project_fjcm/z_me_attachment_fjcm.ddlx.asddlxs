@@ -1,0 +1,90 @@
+@Metadata.layer: #CORE
+@UI: { headerInfo: { typeName:       'Attachment',
+                     typeNamePlural: 'Attachments',
+                     title:          { type: #STANDARD,
+                                       label: 'Attachment',
+                                       value: 'FileName' } },
+       presentationVariant: [{ sortOrder: [{ by: 'UploadDate',
+                                            direction: #DESC }],
+       visualizations: [{ type: #AS_LINEITEM }] }] }
+
+annotate view Z_C_ATTACHMENT_INCIDENTS_FJCM with
+{
+  @UI.facet: [{ id:            'AttachmentInfo',
+                purpose:       #STANDARD,
+                type:          #IDENTIFICATION_REFERENCE,
+                label:         'Attachment Information',
+                position:      10 }]
+
+  @UI.hidden: true
+  AttachmentUUID;
+
+  @UI.hidden: true
+  IncUUID;
+
+  @EndUserText.label: 'File Name'
+  @UI: {lineItem: [{ position: 10,
+                  importance: #HIGH,
+                  label: 'File Name' }],
+  identification: [{ position: 10,
+                  label: 'File Name' }]}
+  FileName;
+
+  @EndUserText.label: 'File Type'
+  @UI: {lineItem: [{ position: 20,
+                  importance: #MEDIUM,
+                  label: 'Type' }],
+  identification: [{ position: 20,
+                  label: 'File Type' }]}
+  FileType;
+
+  @EndUserText.label: 'File Size'
+  @UI: {lineItem: [{ position: 30,
+                  importance: #MEDIUM,
+                  label: 'Size (bytes)' }],
+  identification: [{ position: 30,
+                  label: 'File Size (bytes)' }]}
+  FileSize;
+
+  @UI.hidden: true
+  MimeType;
+
+  @EndUserText.label: 'File Content'
+  @UI: {identification: [{ position: 40,
+                  label: 'File Content' }]}
+  FileContent;
+
+  @EndUserText.label: 'Upload Date'
+  @UI: {lineItem: [{ position: 40,
+                  importance: #LOW,
+                  label: 'Upload Date' }],
+  identification: [{ position: 50,
+                  label: 'Upload Date' }]}
+  UploadDate;
+
+  @EndUserText.label: 'Uploaded By'
+  @UI: {lineItem: [{ position: 50,
+                  importance: #LOW,
+                  label: 'Uploaded By' }],
+  identification: [{ position: 60,
+                  label: 'Uploaded By' }]}
+  UploadedBy;
+
+  @UI.hidden: true
+  LocalCreatedBy;
+
+  @UI.hidden: true
+  LocalCreatedAt;
+
+  @UI.hidden: true
+  LocalLastChangedBy;
+
+  @UI.hidden: true
+  LocalLastChangedAt;
+
+  @UI.hidden: true
+  LastChangedAt;
+
+  @UI.hidden: true
+  _Attachment;
+}

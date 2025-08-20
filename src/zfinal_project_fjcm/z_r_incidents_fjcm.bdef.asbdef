@@ -18,6 +18,8 @@ authorization master ( global, instance )    // Authorization to operate just on
   delete;
 
   association _History { create ( features : instance ); with draft; } // Association to the History CDS
+  association _Attachments { create ( features : instance ); with draft; } //
+
 
   field ( readonly )
   IncUUID,
@@ -114,4 +116,51 @@ etag master LocalLastChangedAt
       LocalLastChangedAt = local_last_changed_at;
       LastChangedAt      = last_changed_at;
     }
+}
+
+// Attachment
+define behavior for Z_R_ATTACHMENT_INCIDENTS_FJCM alias Attachments
+persistent table zdt_attach_fjcm
+draft table zdt_attach_fjcmd
+etag master LocalLastChangedAt
+lock dependent by _Attachment     // 🔑 DEPENDIENTE del parent
+authorization dependent by _Attachment  // 🔑 DEPENDIENTE del parent
+{
+  field ( mandatory : create )
+   FileName, FileContent;
+
+  field ( readonly )
+   IncUUID, UploadDate, UploadedBy, LocalCreatedBy, LocalCreatedAt, LocalLastChangedBy, LocalLastChangedAt, LastChangedAt;
+
+  field ( numbering : managed, readonly )
+  AttachmentUUID;
+
+  field ( readonly : update )
+   FileName, FileContent;
+
+  update;
+  delete;
+
+  determination setAttachmentDefaults on modify { create; }
+
+  // 🔗 ASSOCIATION - Child hacia parent
+  association _Attachment { with draft; }
+
+  mapping for zdt_attach_fjcm
+  {
+    AttachmentUUID = attachment_uuid;
+    IncUUID = inc_uuid;
+    FileName = file_name;
+    FileType = file_type;
+    FileSize = file_size;
+    MimeType = mime_type;
+    FileContent = file_content;
+    UploadDate = upload_date;
+    UploadedBy = uploaded_by;
+    LocalCreatedBy = local_created_by;
+    LocalCreatedAt = local_created_at;
+    LocalLastChangedBy = local_last_changed_by;
+    LocalLastChangedAt = local_last_changed_at;
+    LastChangedAt = last_changed_at;
+  }
 }

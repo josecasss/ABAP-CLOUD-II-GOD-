@@ -37,5 +37,6 @@ define root view entity z_c_inct_fjcm
       LastChangedAt,
 
       /* Associations */
-      _History : redirected to composition child Z_C_INCT_H_FJCM //Redirected composition association to the child entity
+      _History : redirected to composition child Z_C_INCT_H_FJCM, //Redirected composition association to the child entity,
+      _Attachments : redirected to composition child Z_C_ATTACHMENT_INCIDENTS_FJCM  // 🆕 AGREGAR ESTA LÍNEA
 }

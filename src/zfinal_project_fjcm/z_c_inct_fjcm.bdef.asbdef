@@ -17,6 +17,7 @@ define behavior for z_c_inct_fjcm //alias <alias_name>
   use action Prepare;
 
   use association _History { create; with draft; }
+  use association _Attachments { create; with draft; }
 }
 
 define behavior for Z_C_INCT_H_FJCM //alias <alias_name>
@@ -25,4 +26,12 @@ define behavior for Z_C_INCT_H_FJCM //alias <alias_name>
   use delete;
 
   use association _Incidents { with draft; }
+}
+
+define behavior for Z_C_ATTACHMENT_INCIDENTS_FJCM //alias <alias_name>
+{
+  use update;
+  use delete;
+
+  use association _Attachment { with draft; }
 }
