@@ -1,37 +1,48 @@
 class lhc_Incident definition inheriting from cl_abap_behavior_handler.
   public section.
 
+    " Status constants
     constants: begin of mc_status,
-                 open        type zde_status_fjcm value 'OP',
-                 in_progress type zde_status_fjcm value 'IP',
-                 pending     type zde_status_fjcm value 'PE',
-                 completed   type zde_status_fjcm value 'CO',
-                 closed      type zde_status_fjcm value 'CL',
-                 canceled    type zde_status_fjcm value 'CN',
+                 open        type zde_status_fjcm value 'OP',  " Newly created
+                 in_progress type zde_status_fjcm value 'IP',  " Work ongoing
+                 pending     type zde_status_fjcm value 'PE',  " Waiting on something
+                 completed   type zde_status_fjcm value 'CO',  " Finished (not necessarily closed)
+                 closed      type zde_status_fjcm value 'CL',  " Fully closed
+                 canceled    type zde_status_fjcm value 'CN',  " Aborted
                end of mc_status.
 
   private section.
 
+    " Purpose: On modify – assign default CreationDate, next IncidentID, initial Status; validate future date.
     methods setDefaultValues for determine on modify
       importing keys for Incidents~setDefaultValues.
 
+    " Purpose: Enable/disable actions & navigation dynamically (ChangeStatus, _History).
     methods get_instance_features for instance features
       importing keys request requested_features for Incidents result result.
 
+
+    " Purpose: Hook for global auth (currently no logic).
     methods get_global_authorizations for global authorization
       importing request requested_authorizations for Incidents result result.
 
+    " Purpose: Action – validate transition, update status + write history record.
     methods changeStatus for modify
       importing keys for action Incidents~ChangeStatus result result.
 
+    " Purpose: Hook for per-instance auth (currently empty).
     methods get_instance_authorizations for instance authorization
       importing keys request requested_authorizations for Incidents result result.
 
+    " Purpose: On save – trigger internal action to seed first history entry.
     methods setdefaulthistory for determine on save
       importing keys for incidents~setdefaulthistory.
+
+    " Purpose: Action – append a history line (used for initial creation too).
     methods sethistory for modify
       importing keys for action incidents~sethistory.
 
+    " Purpose: Return current max HisID for an Incident (so we can increment).
     methods get_history_index exporting ev_incuuid      type sysuuid_x16
                               returning value(rv_index) type zdt_inct_h_fjcm-his_id.
 
@@ -39,22 +50,19 @@ endclass.
 
 class lhc_Incident implementation.
 
-method setDefaultValues.
-** Read root entity entries
+  method setDefaultValues.
+    " Read current temp records to validate & enrich
     read entities of z_r_incidents_fjcm in local mode
      entity Incidents
      fields ( CreationDate
               Status ) with corresponding #( keys )
      result data(incidents).
 
-** NUEVA VALIDACIÓN: Verificar fecha futura ANTES de eliminar registros
+    " Prevent future CreationDate (if user filled something manually)
     data(lv_current_date) = cl_abap_context_info=>get_system_date( ).
 
-    " Validar fechas futuras en los registros que SÍ tienen fecha
     loop at incidents into data(ls_incident) where CreationDate is not initial.
       if ls_incident-CreationDate > lv_current_date.
-
-        " Mostrar mensaje de error
         append value #(
           %tky = ls_incident-%tky
           %msg = new zcl_incidents_messages_fjcm(
@@ -65,16 +73,16 @@ method setDefaultValues.
           %element-CreationDate = if_abap_behv=>mk-on
           %state_area = 'VALIDATE_DATE'
         ) to reported-incidents.
-
       endif.
     endloop.
 
-** This important for logic
+    " Drop ones that already had a CreationDate (we only fill blanks)
     delete incidents where CreationDate is not initial.
 
+    " Nothing to do? bail
     check incidents is not initial.
 
-** Get Last index from Incidents
+    " Get next IncidentID (simple max + 1)
     select from zdt_inct_fjcm
       fields max( incident_id ) as max_inct_id
       where incident_id is not null
@@ -86,7 +94,7 @@ method setDefaultValues.
       lv_max_inct_id += 1.
     endif.
 
-** Modify status in Root Entity
+    " Push generated defaults
     modify entities of z_r_incidents_fjcm in local mode
       entity Incidents
       update
@@ -97,9 +105,10 @@ method setDefaultValues.
                                                  IncidentID = lv_max_inct_id
                                                  CreationDate = cl_abap_context_info=>get_system_date( )
                                                  Status       = mc_status-open )  ).
-endmethod.
+  endmethod.
 
   method get_instance_features.
+    " Decide which actions / associations are active
     data lv_history_index type i.
     read entities of z_r_incidents_fjcm in local mode
        entity Incidents
@@ -108,7 +117,7 @@ endmethod.
        result data(incidents)
        failed failed.
 
-** Disable changeStatus for Incidents Creation
+    " If exactly one row, check if history exists; else default enable
     data(lv_create_action) = lines( incidents ).
     if lv_create_action eq 1.
       lv_history_index = get_history_index( importing ev_incuuid = incidents[ 1 ]-IncUUID ).
@@ -116,6 +125,7 @@ endmethod.
       lv_history_index = 1.
     endif.
 
+    " Build feature flags (disable when terminal or no history index)
     result = value #( for incident in incidents
                           ( %tky                   = incident-%tky
                             %action-ChangeStatus   = cond #( when incident-Status = mc_status-completed or
@@ -124,7 +134,6 @@ endmethod.
                                                                   lv_history_index = 0
                                                              then if_abap_behv=>fc-o-disabled
                                                              else if_abap_behv=>fc-o-enabled )
-
                             %assoc-_History       = cond #( when incident-Status = mc_status-completed or
                                                                  incident-Status = mc_status-closed    or
                                                                  incident-Status = mc_status-canceled  or
@@ -135,7 +144,7 @@ endmethod.
   endmethod.
 
   method changeStatus.
-* Declaration of necessary variables
+    " Change status + log history (with validation)
     data: lt_updated_root_entity type table for update z_r_incidents_fjcm,
           lt_association_entity  type table for create z_r_incidents_fjcm\_History,
           lv_status              type zde_status_fjcm,
@@ -146,26 +155,22 @@ endmethod.
           lv_max_his_id          type zdt_inct_h_fjcm-his_id,
           lv_wrong_status        type zde_status_fjcm.
 
-** Iterate through the keys records to get parameters for validations
+    " Pull current full records for given keys
     read entities of z_r_incidents_fjcm in local mode
          entity Incidents
          all fields with corresponding #( keys )
          result data(incidents)
          failed failed.
 
-** Get parameters
     loop at incidents assigning field-symbol(<incident>).
-** Get Status
+      " Requested target status
       lv_status = keys[ key id %tky = <incident>-%tky ]-%param-status.
 
-**  It is not possible to change the pending (PE) to Completed (CO) or Closed (CL) status
+      " Block invalid transition: pending -> (closed | completed)
       if <incident>-Status eq mc_status-pending and lv_status eq mc_status-closed or
          <incident>-Status eq mc_status-pending and lv_status eq mc_status-completed.
-** Set authorizations
         append value #( %tky = <incident>-%tky ) to failed-incidents.
-
         lv_wrong_status = lv_status.
-* Customize error messages
         append value #( %tky = <incident>-%tky
                         %msg = new zcl_incidents_messages_fjcm(
                           textid = zcl_incidents_messages_fjcm=>status_invalid
@@ -178,17 +183,18 @@ endmethod.
         exit.
       endif.
 
+      " Stage update for root
       append value #( %tky = <incident>-%tky
                       ChangedDate = cl_abap_context_info=>get_system_date( )
                       Status = lv_status ) to lt_updated_root_entity.
 
-** Get Text
+      " History text (param)
       lv_text = keys[ key id %tky = <incident>-%tky ]-%param-text.
 
+      " Next history id
       lv_max_his_id = get_history_index(
                   importing
                     ev_incuuid = <incident>-IncUUID ).
-
       if lv_max_his_id is initial.
         ls_incident_history-his_id = 1.
       else.
@@ -198,14 +204,15 @@ endmethod.
       ls_incident_history-new_status = lv_status.
       ls_incident_history-text = lv_text.
 
+      " Generate UUID
       try.
           ls_incident_history-inc_uuid = cl_system_uuid=>create_uuid_x16_static( ).
         catch cx_uuid_error into data(lo_error).
           lv_exception = lo_error->get_text(  ).
       endtry.
 
+      " Stage new history entry
       if ls_incident_history-his_id is not initial.
-*
         append value #( %tky = <incident>-%tky
                         %target = value #( (  HisUUID = ls_incident_history-inc_uuid
                                               IncUUID = <incident>-IncUUID
@@ -218,18 +225,19 @@ endmethod.
     endloop.
     unassign <incident>.
 
-** The process is interrupted because a change of status from pending (PE) to Completed (CO) or Closed (CL) is not permitted.
+    " Abort if validation failed
     check lv_error is initial.
 
-** Modify status in Root Entity
+    " Apply status changes
     modify entities of z_r_incidents_fjcm in local mode
     entity Incidents
     update  fields ( ChangedDate
                      Status )
     with lt_updated_root_entity.
 
-    free incidents. " Free entries in incidents
+    free incidents.
 
+    " Persist history child entries
     modify entities of z_r_incidents_fjcm in local mode
      entity Incidents
      create by \_History fields ( HisUUID
@@ -244,20 +252,19 @@ endmethod.
      failed failed
      reported reported.
 
-** Read root entity entries updated
+    " Return updated root entities (UI sync)
     read entities of z_r_incidents_fjcm in local mode
     entity Incidents
     all fields with corresponding #( keys )
     result incidents
     failed failed.
 
-** Update User Interface
     result = value #( for incident in incidents ( %tky = incident-%tky
                                                   %param = incident ) ).
   endmethod.
 
   method setDefaultHistory.
-** Execute internal action to update Flight Date
+    " Trigger internal action to seed first history line
     modify entities of z_r_incidents_fjcm in local mode
     entity Incidents
     execute setHistory
@@ -265,7 +272,7 @@ endmethod.
   endmethod.
 
   method get_history_index.
-** Fill history data
+    " Get current max history ID (HisID) for given incident
     select from zdt_inct_h_fjcm
       fields max( his_id ) as max_his_id
       where inc_uuid eq @ev_incuuid and
@@ -274,23 +281,21 @@ endmethod.
   endmethod.
 
   method setHistory.
-** Declaration of necessary variables
+    " Create initial history entry (used on save)
     data: lt_updated_root_entity type table for update z_r_incidents_fjcm,
           lt_association_entity  type table for create z_r_incidents_fjcm\_History,
           lv_exception           type string,
           ls_incident_history    type zdt_inct_h_fjcm,
           lv_max_his_id          type zdt_inct_h_fjcm-his_id.
 
-** Iterate through the keys records to get parameters for validations
+    " Load incidents
     read entities of z_r_incidents_fjcm in local mode
          entity Incidents
          all fields with corresponding #( keys )
          result data(incidents).
 
-** Get parameters
     loop at incidents assigning field-symbol(<incident>).
       lv_max_his_id = get_history_index( importing ev_incuuid = <incident>-IncUUID ).
-
       if lv_max_his_id is initial.
         ls_incident_history-his_id = 1.
       else.
@@ -310,13 +315,14 @@ endmethod.
                                               HisID = ls_incident_history-his_id
                                               NewStatus = <incident>-Status
                                               Text = 'First Incident' ) )
-                                               ) to lt_association_entity.
+                                           ) to lt_association_entity.
       endif.
     endloop.
     unassign <incident>.
 
-    free incidents. " Free entries in incidents
+    free incidents.
 
+    " Persist first history record(s)
     modify entities of z_r_incidents_fjcm in local mode
      entity Incidents
      create by \_History fields ( HisUUID
@@ -330,9 +336,11 @@ endmethod.
   endmethod.
 
   method get_global_authorizations.
+    " No global auth logic (placeholder)
   endmethod.
 
   method get_instance_authorizations.
+    " No per-instance auth logic (placeholder)
   endmethod.
 
 endclass.

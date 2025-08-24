@@ -22,6 +22,12 @@ define root view entity z_c_inct_fjcm
       Description,
       Status,
       Priority,
+            // Virtual element para criticality (0..3)
+      @EndUserText.label: 'PriorityCriticality' // Label for the virtual field     
+      @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_INCT_PRIO_VE_FJCM'
+ virtual     PriorityCriticality : abap.int1,
+     
+      
       @Search.defaultSearchElement: true  // Default search element
       @Search.fuzzinessThreshold: 0.8     // Fuzziness threshold for search *Umbral de búsqueda*
       @Search.ranking: #MEDIUM            // Ranking for search *Importancia Clasificación de búsqueda
@@ -35,7 +41,7 @@ define root view entity z_c_inct_fjcm
       LocalLastChangedBy,
       LocalLastChangedAt,
       LastChangedAt,
-
+ 
       /* Associations */
       _History : redirected to composition child Z_C_INCT_H_FJCM, //Redirected composition association to the child entity,
       _Attachments : redirected to composition child Z_C_ATTACHMENT_INCIDENTS_FJCM  // 🆕 AGREGAR ESTA LÍNEA

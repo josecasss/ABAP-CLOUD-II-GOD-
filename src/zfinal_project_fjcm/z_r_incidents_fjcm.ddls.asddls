@@ -3,9 +3,9 @@
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity z_r_incidents_fjcm
   as select from zdt_inct_fjcm
-  composition [0..*] of z_dd_inct_h_fjcm as _History // Asociation Composition to history CDS Entity
+  composition [0..*] of z_dd_inct_h_fjcm              as _History // Asociation Composition to history CDS Entity
   composition [0..*] of Z_R_ATTACHMENT_INCIDENTS_FJCM as _Attachments // Asociation Composition to Attachments CDS Entity
-  
+
 {
   key inc_uuid              as IncUUID,
       incident_id           as IncidentID,
@@ -30,7 +30,7 @@ define root view entity z_r_incidents_fjcm
       //TOTAL Etag
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt,
-
+      
       _History, // Make association public
       _Attachments
 }

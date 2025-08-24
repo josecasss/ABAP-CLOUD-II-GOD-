@@ -4,7 +4,7 @@ with draft;
 
 // First Behavior for Incidents
 define behavior for z_r_incidents_fjcm alias Incidents
-persistent table zdt_inct_fjcm
+persistent table zdt_inct_fjcm  // PROBLEMA MAPEAR CRITICAL PRORITY
 draft table zdt_inct_fjcm_d
 
 etag master LocalLastChangedAt
@@ -120,11 +120,12 @@ etag master LocalLastChangedAt
 
 // Attachment
 define behavior for Z_R_ATTACHMENT_INCIDENTS_FJCM alias Attachments
+implementation in class zbp_r_attach_incidents_fjcm unique
 persistent table zdt_attach_fjcm
 draft table zdt_attach_fjcmd
 etag master LocalLastChangedAt
-lock dependent by _Attachment     // 🔑 DEPENDIENTE del parent
-authorization dependent by _Attachment  // 🔑 DEPENDIENTE del parent
+lock dependent by _Attachment
+authorization dependent by _Attachment
 {
   field ( mandatory : create )
    FileName, FileContent;
@@ -143,7 +144,6 @@ authorization dependent by _Attachment  // 🔑 DEPENDIENTE del parent
 
   determination setAttachmentDefaults on modify { create; }
 
-  // 🔗 ASSOCIATION - Child hacia parent
   association _Attachment { with draft; }
 
   mapping for zdt_attach_fjcm
