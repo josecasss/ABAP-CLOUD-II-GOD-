@@ -2,7 +2,7 @@
 @EndUserText.label: 'Travel - Interface'
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity Z_I_TRAVEL_FJCM //Agregar root
-  provider contract transactional_interface  // Contract for transactional interface RE USE
+  provider contract transactional_interface  // Contract for transactional interface RE USE INTERFAZ
   as projection on z_r_travel_fjcm
 {
   key TravelUUID,
@@ -31,3 +31,5 @@ define root view entity Z_I_TRAVEL_FJCM //Agregar root
 
 
 //Made it by template define view entity
+// Interfaz del root entity 
+// No es necesario crearlo se puede ir defrente al consumption

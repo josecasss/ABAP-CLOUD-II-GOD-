@@ -1,0 +1,11 @@
+@EndUserText.label: 'Priviledge Access'
+@MappingRole: true
+define role ZAC_07_FJCM {
+    grant
+        select
+            on
+                z363_20_fjcm
+                    where
+                        false;
+                        
+}

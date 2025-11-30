@@ -10,4 +10,4 @@ define role ZAC_05_FJCM {
 
 // Made with template RoleWithUnstrictedAccess
 
-// This cds had a AccessControl with Authorization object, but this Full Access have more priority since CDS allways give more priority to AccessControl with more data to see
+// This cds had a AccessControl with Authorization object, but this Full Access have more PRIORITY since CDS allways give more priority to AccessControl with more data to see

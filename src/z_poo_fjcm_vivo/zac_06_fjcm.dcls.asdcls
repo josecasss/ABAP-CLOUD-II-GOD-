@@ -1,0 +1,13 @@
+@EndUserText.label: 'Restricted Access'
+@MappingRole: true
+define role ZAC_06_FJCM {
+    grant
+        select
+            on
+                z363_19_fjcm
+//                where TravelId = ''; // Could be the case there is TravelID without value, but anyway givinge access
+                    where
+                        false;      // No access to any data ( Better Practice )
+                        
+}
+//TEMPLATE Define Role with privilege access 

@@ -4,10 +4,10 @@ define role ZAC_03_FJCM {
     grant
         select
             on
-                z363_17_fjcm
-//Ways to do it inheratance                
-//                    where
+                z363_17_fjcm         
+//                    where                                                                                                 // Ways to do it inheratance       
 //                        inheriting conditions from entity z363_16_fjcm; // Inheritance Access Control from this CDS
+
 //Ways to do it inheratance more explicit 
                       where inherit zac_01_fjcm              // inheriting from this AccessControl  
                       for grant select on z363_16_fjcm       // Taking the conditions from the AccessControl of this CDS
@@ -16,3 +16,4 @@ define role ZAC_03_FJCM {
 }
 
 // Made it with Template Inheritance with Conditions
+// Inheritance Access Control from the zac_01_fjcm an adding new condition

@@ -1,0 +1,30 @@
+@EndUserText.label: 'Literal complex conditions'
+@MappingRole: true
+define role ZAC_08_fjcm {
+    grant
+        select
+            on
+                z363_21_FJCM
+                    where
+                          CustomerId =  '000030'                           // Customer equal to  
+                       or CustomerId >  '000030'                           // Customer greater than
+                       or CustomerId >= '000030'                           // Customer greater than or equal to
+                       or CustomerId <  '000030'                           // Customer less than
+                       or CustomerId <= '000030'                           // Customer less than or equal to
+                       or CustomerId <> '000030'                           // Customer not equal to
+                       or CustomerId ?=  '000030'                          // CustomerId = '000030' or CustomerId is initial
+                       or CustomerId is initial                            // CustomerId doesnt have value
+                       or CustomerId is not initial                        // CustomerId have value
+                       or CustomerId is null                               // CustomerId is ZERO
+                       or CustomerId is not null                           // CustomerId is not ZERO
+                       or CustomerId between '000020' and '000030'  
+                       or CustomerId not between '000020' and '000030'
+                       or CustomerId like '%2%'                            // CustomerId contains 2
+                       or CustomerId like '00002_'                         // CustomerId starts with 00002 and has one more character
+                       ;
+                        
+}
+
+//Template with simple condition
+
+//All the conditions available for access control

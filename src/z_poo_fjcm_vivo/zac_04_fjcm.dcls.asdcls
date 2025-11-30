@@ -6,7 +6,7 @@ define role ZAC_04_fjcm {
             on
                z363_18_fjcm
                     where
-                        (CarrierId) = aspect pfcg_auth(ZAO_C_FJCM, ZAF_C_FJCM, ACTVT = '03'); //Column - Authorization field, Authorization object, act 
+                        (CarrierId) = aspect pfcg_auth(ZAO_C_FJCM, ZAF_C_FJCM, ACTVT = '03'); //Column - Authorization field, Authorization object, actv
                         
 }
 

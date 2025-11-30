@@ -1,0 +1,4 @@
+@EndUserText.label: 'Correcion'
+define service Ztravel_sd_fjcm_2 {
+  expose ztravel_c_fjcm as Travel;
+}

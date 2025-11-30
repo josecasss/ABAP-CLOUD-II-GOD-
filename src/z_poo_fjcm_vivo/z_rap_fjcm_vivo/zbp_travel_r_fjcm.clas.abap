@@ -1,13 +1,5 @@
-class ZBP_TRAVEL_R_FJCM definition
-  public
-  create private .
+class zbp_travel_r_fjcm definition public abstract final for behavior of ztravel_r_fjcm.
+endclass.
 
-public section.
-protected section.
-private section.
-ENDCLASS.
-
-
-
-CLASS ZBP_TRAVEL_R_FJCM IMPLEMENTATION.
-ENDCLASS.
+class zbp_travel_r_fjcm implementation.
+endclass.

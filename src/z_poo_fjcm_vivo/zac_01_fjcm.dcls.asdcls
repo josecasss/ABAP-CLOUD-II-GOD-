@@ -19,9 +19,11 @@ define role ZAC_01_FJCM {
 }
 
 //To grant permissions to the role, just showing what the role can see 
-//For this case i just put to be visible the field CountryCode ES but i can put more SQL logic
+//For this case I just put to be visible the field CountryCode ES but I can put more SQL logic
 // *IMPORTANT* Its not a filter, is a literal that will be used to restrict the data that the role can access.
 
-
-
 //Example of access control is for roles that are used to restrict access to certain data based on specific criteria, such as country codes, user roles, or other attributes.
+
+//BETTER PRACTICE: HAVE all the access control roles in one access control file, so its easier to manage and find them
+
+//GET where used to ( crtl + shift + G) to find all the access control roles assigned to the CDS view

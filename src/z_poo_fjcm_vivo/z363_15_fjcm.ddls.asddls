@@ -29,3 +29,5 @@ define view entity z363_15_fjcm  // Bc i have #CHECK is just a warning until im 
 
 
 // NOT REQUIRED = CHECK, In this case case is the same behavior bc if doesnt have any access control 
+
+//GET where used to ( crtl + shift + G) to find all the access control roles assigned to the CDS view

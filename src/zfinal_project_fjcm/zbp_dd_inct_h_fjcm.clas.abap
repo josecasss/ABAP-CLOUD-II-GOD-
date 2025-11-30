@@ -1,5 +1,13 @@
-class zbp_dd_inct_h_fjcm definition public abstract final for behavior of z_r_incidents_fjcm.
-endclass.
+class ZBP_DD_INCT_H_FJCM definition
+  public
+  create private .
 
-class zbp_dd_inct_h_fjcm implementation.
-endclass.
+public section.
+protected section.
+private section.
+ENDCLASS.
+
+
+
+CLASS ZBP_DD_INCT_H_FJCM IMPLEMENTATION.
+ENDCLASS.

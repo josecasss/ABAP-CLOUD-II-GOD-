@@ -34,10 +34,10 @@ define root view entity ztravel_c_fjcm
           TotalPrice,
 
           //SADL - Service Adaptation Description Language
-          @EndUserText.label: 'VAT Included' // Label for the virtual field
-          @Semantics.amount.currencyCode: 'CurrencyCode'
-          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_VIRT_ELEM_FJCM' // This class contains the logic to calculate the VAT included in the total price
-  virtual PriceWithVAT : /dmo/total_price, // Virtual field to calculate the total price with VAT *Campo virtual añadido al vuelo para calcular el precio total con IVA*
+//          @EndUserText.label: 'VAT Included' // Label for the virtual field
+//          @Semantics.amount.currencyCode: 'CurrencyCode'
+//          @ObjectModel.virtualElementCalculatedBy: 'ABAP:ZCL_VIRT_ELEM_FJCM' // This class contains the logic to calculate the VAT included in the total price
+//  virtual PriceWithVAT : /dmo/total_price, // Virtual field to calculate the total price with VAT *Campo virtual añadido al vuelo para calcular el precio total con IVA*
 
           CurrencyCode,
           Description,

@@ -15,18 +15,15 @@ define root view entity z_r_travel_fjcm
       customer_id           as CustomerID,
       begin_date            as BeginDate,
       end_date              as EndDate,
-
       @Semantics.amount.currencyCode: 'CurrencyCode'
       booking_fee           as BookingFee,
       @Semantics.amount.currencyCode: 'CurrencyCode'
       total_price           as TotalPrice,
       currency_code         as CurrencyCode,
-
       description           as Description,
       overall_status        as OverallStatus,
-
-      //AUDIT FIELDS
       
+      //AUDIT FIELDS
       @Semantics.user.createdBy: true
       local_created_by      as LocalCreatedBy,
       @Semantics.systemDateTime.createdAt: true
@@ -48,3 +45,5 @@ define root view entity z_r_travel_fjcm
       _OverallStatus,
       _Currency
 }
+
+//Root Entity para empezar el Business Object 
