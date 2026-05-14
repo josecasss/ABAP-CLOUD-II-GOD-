@@ -1,15 +1,10 @@
-class zcl_15_poo_fjcm definition abstract
+class ZCL_15_POO_FJCM definition
   public
-  "FINAL
-  create public .
+  create private .
 
-  public section.
-    methods:
-      airplane_type abstract
-        returning value(rv_airplane_type) type string.
-
-  protected section.
-  private section.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 

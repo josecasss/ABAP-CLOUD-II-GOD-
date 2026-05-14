@@ -1,6 +1,4 @@
-interface zif_poo_04_fjcm
+interface ZIF_POO_04_FJCM
   public .
-
-  methods: define_company returning value(rv_company) type string.
 
 endinterface.

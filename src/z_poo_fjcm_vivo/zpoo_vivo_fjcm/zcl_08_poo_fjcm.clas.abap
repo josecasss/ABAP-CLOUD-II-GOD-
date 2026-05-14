@@ -1,20 +1,13 @@
-CLASS zcl_08_poo_fjcm DEFINITION INHERITING FROM zcl_07_poo_fjcm
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_08_POO_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-    METHODS: walk REDEFINITION.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
 CLASS ZCL_08_POO_FJCM IMPLEMENTATION.
-
-
-  METHOD walk.
-    rv_walk = 'The lion walks'.
-  ENDMETHOD.
 ENDCLASS.

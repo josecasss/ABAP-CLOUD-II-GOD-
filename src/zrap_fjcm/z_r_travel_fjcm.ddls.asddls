@@ -3,11 +3,11 @@
 @Metadata.ignorePropagatedAnnotations: true
 define root view entity z_r_travel_fjcm
   as select from ztravel_fjcm
-  
-  association [0..1] to /DMO/I_Agency as _Agency on $projection.AgencyID = _Agency.AgencyID             //  0...1  Puede que no haya un registro relacionado o que haya solo uno 
-  association [0..1] to /DMO/I_Customer as _Customer on $projection.CustomerID = _Customer.CustomerID   
-  association [1..1] to /DMO/I_Overall_Status_VH as _OverallStatus on $projection.OverallStatus = _OverallStatus.OverallStatus //  1..1 Because a travel must have just one status, can not have 2 tatus 
-  association [0..1] to I_Currency as _Currency on $projection.CurrencyCode = _Currency.Currency        // You can never have more than one related currency for a single record.  
+
+  association [0..1] to /DMO/I_Agency            as _Agency        on $projection.AgencyID = _Agency.AgencyID //  0...1  Puede que no haya un registro relacionado o que haya solo uno
+  association [0..1] to /DMO/I_Customer          as _Customer      on $projection.CustomerID = _Customer.CustomerID
+  association [1..1] to /DMO/I_Overall_Status_VH as _OverallStatus on $projection.OverallStatus = _OverallStatus.OverallStatus //  1..1 Because a travel must have just one status, can not have 2 tatus
+  association [0..1] to I_Currency               as _Currency      on $projection.CurrencyCode = _Currency.Currency // You can never have more than one related currency for a single record.
 {
   key travel_uuid           as TravelUUID,
       travel_id             as TravelID,
@@ -22,6 +22,13 @@ define root view entity z_r_travel_fjcm
       currency_code         as CurrencyCode,
       description           as Description,
       overall_status        as OverallStatus,
+      
+//      case overall_status 
+//        when 'O' then 2
+//        when 'A' then 3
+//        when 'X' then 1
+//        else 0
+//      end as OverallStatusCriticality,
       
       //AUDIT FIELDS
       @Semantics.user.createdBy: true
@@ -38,8 +45,8 @@ define root view entity z_r_travel_fjcm
       //TOTAL Etag
       @Semantics.systemDateTime.lastChangedAt: true
       last_changed_at       as LastChangedAt,
-      
-      //Make Association 
+
+      //Make Association
       _Agency,
       _Customer,
       _OverallStatus,

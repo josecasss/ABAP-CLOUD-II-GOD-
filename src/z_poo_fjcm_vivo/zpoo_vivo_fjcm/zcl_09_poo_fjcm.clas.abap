@@ -1,15 +1,10 @@
-class zcl_09_poo_fjcm definition
+class ZCL_09_POO_FJCM definition
   public
-  final
-  create public
-  global friends zcl_10_poo_fjcm.     " Clase amiga acceso a la seccion privada
+  create private .
 
-  public section.
-  protected section.
-  private section.
-
-    data: departemnt type string.
-
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 

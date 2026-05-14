@@ -1,21 +1,13 @@
-CLASS zcl_19_poo_fjcm DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_19_POO_FJCM definition
+  public
+  create private .
 
-  PUBLIC SECTION.
-    INTERFACES:
-      zif_poo_04_fjcm.
-  PROTECTED SECTION.
-  PRIVATE SECTION.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
 CLASS ZCL_19_POO_FJCM IMPLEMENTATION.
-
-
-  METHOD zif_poo_04_fjcm~define_company.
-    rv_company = 'Company USA...'.
-  ENDMETHOD.
 ENDCLASS.

@@ -24,16 +24,38 @@ annotate entity z_c_travel_fjcm with
   //This ensures your Fiori application is responsive on all devices,
   //and displays only the most important information depending on screen size.
 
+  //Facets es como la secciones del object page, cada facet tiene un tipo y un proposito //LIKE A TAB
   @UI.facet: [ { id: 'TravelMasterData',
                  purpose: #STANDARD,
-                 type: #IDENTIFICATION_REFERENCE,
+                 type: #FIELDGROUP_REFERENCE, //Cambiar el tipo de facet para que funcione, a field reference
+                 targetQualifier: 'TravelMaster', //Prueba Facets
                  label: 'Travel Master Data', // This is used to define name of the Facet in the Fiori application  *Cuando abres en detalles*
-                 position: 10 } ]
-                 
-                 
+                 position: 10 },
+
+               { id: 'Dates',
+                 purpose: #STANDARD,          //Si quisiera mostar esta facet como line item, deberia hacer un nuevo CDS hija y mostarlo con target element
+                 type: #FIELDGROUP_REFERENCE, //Cambiar el tipo de facet para que funcione, a field reference
+                 targetQualifier: 'Dates',
+                 label: 'Dates',
+                 position: 20},
+
+               { id: 'Price',
+                 purpose: #STANDARD,
+                 type: #FIELDGROUP_REFERENCE, //Cambiar el tipo de facet para que funcione, a field reference
+                 targetQualifier: 'Price',
+                 label: 'Price',
+                 position: 30 },
+
+               { id: 'Status',
+                 purpose: #STANDARD,
+                 type: #FIELDGROUP_REFERENCE, //Cambiar el tipo de facet para que funcione, a field reference
+                 targetQualifier: 'Status',
+                 label: 'Status',
+                 position: 40 } ]
+
   @UI.hidden: true  // This annotation is used to hide the field of TravelUUID in the Fiori application
   TravelUUID;
-
+  @UI.fieldGroup: [{ qualifier:'TravelMaster', position:10, label:'Travel ID' }] //Darle un field group al campo para que este en ese grupo
   @UI: { lineItem: [ { position :10 ,
                     importance: #HIGH,
                     label: 'Travel ID'   }, //If i dont defined the label, its gonna take the name of *DataElement*
@@ -41,34 +63,37 @@ annotate entity z_c_travel_fjcm with
                       dataAction: 'acceptTravel', // Name of the action METHOD
                       label: 'Accept Travel', // Label of the action in the Fiori application
                       position: 10 },
-                    { type: #FOR_ACTION,    
-                      dataAction: 'rejectTravel', 
-                      label: 'Reject Travel', 
+                    { type: #FOR_ACTION,
+                      dataAction: 'rejectTravel',
+                      label: 'Reject Travel',
                       position: 20 },
-                    { type: #FOR_ACTION,    
-                      dataAction: 'deductDiscount', 
-                      label: 'Discount', 
+                    { type: #FOR_ACTION,
+                      dataAction: 'deductDiscount',
+                      label: 'Discount',
                       position: 30 }],
          selectionField: [{ position: 10 }],   // Selection fields are used in the filter bar of the Fiori application
          identification: [{ position: 10 },    //Identification is used in the details of the Fiori application *Details of the instance*
          //Replicate this here to add the actions in the identification facet (:
-                         { type: #FOR_ACTION,    
-                           dataAction: 'accepTravel', 
+                         { type: #FOR_ACTION,
+                           dataAction: 'accepTravel',
                            label: 'Accept Travel',
                            position: 10 },
-                         { type: #FOR_ACTION,    
-                           dataAction: 'rejectTravel', 
-                           label: 'Reject Travel', 
+                         { type: #FOR_ACTION,
+                           dataAction: 'rejectTravel',
+                           label: 'Reject Travel',
                            position: 20 },
-                         { type: #FOR_ACTION,    
-                           dataAction: 'deductDiscount', 
-                           label: 'Discount', 
-                           position: 30 } ] } 
+                         { type: #FOR_ACTION,
+                           dataAction: 'deductDiscount',
+                           label: 'Discount',
+                           position: 30 } ] }
   TravelID;
 
-  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Agency_StdVH', // This is the value help definition for the AgencyID field
-                                                 element: 'AgencyID' },      // This element is the one that will be used in the value help
-                                                 useForValidation: true }]   // This is used to validate the AgencyID field exits
+  @UI.fieldGroup: [{ qualifier:'TravelMaster', position:20 }]
+  @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Agency_StdVH', 
+                                                 element: 'AgencyID' }
+//                                               useForValidation: true // This is used to validate the AgencyID field exits
+//Mejor personalizar mensajes en el beahvior pool, pero userForValidation es para empezar. 
+  }]  
   @UI: { lineItem: [ { position :20 ,
                     importance: #HIGH,
                     label: 'AgencyID'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
@@ -77,9 +102,11 @@ annotate entity z_c_travel_fjcm with
 
   AgencyID;
 
+  @UI.fieldGroup: [{ qualifier:'TravelMaster', position: 30 }]
   @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Customer_StdVH', // This is the value help definition for the AgencyID field
-                                             element: 'CustomerID' },        // This element is the one that will be used in the value help
-                                             useForValidation: true }]     // This is used to validate
+                                             element: 'CustomerID' }        // This element is the one that will be used in the value help
+  //                                            useForValidation: true          // This is used to validate
+                                             }]     
   @UI: { lineItem: [ { position : 30 ,
                     importance: #HIGH,
                     label: 'CustomerID'   } ], //If i dont defined the label, its gonna take the name of *DataElement*
@@ -88,27 +115,42 @@ annotate entity z_c_travel_fjcm with
 
   CustomerID;
 
+  @UI.fieldGroup: [{ qualifier:'TravelMaster', position: 40 }]
+  @UI:  { lineItem: [ { position :40 ,
+                    importance: #MEDIUM,
+                    label: 'Description' }],
+  //      selectionField: [{ position: 40 }],
+          identification: [{ position:40 }]}
+  Description;
+
+  @UI.fieldGroup: [{ qualifier:'Dates', position:10 }]
+  @Consumption.filter: { selectionType: #INTERVAL, multipleSelections: false }  //Calendario
   @UI:  { lineItem: [ { position :40 ,
                     importance: #MEDIUM,
                     label: 'Begin Date' }],
-                    identification: [{ position:40 }]}   // Position 40 in the identification facet  *Instance Details* in the Fiori application
-
+                    selectionField: [{ position: 40 }],
+                    identification: [{ position:40 }]} // Position 40 in the identification facet  *Instance Details* in the Fiori application
   BeginDate;
 
+  @UI.fieldGroup: [{ qualifier:'Dates', position:20 }] // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
+  @Consumption.filter: { selectionType: #INTERVAL, multipleSelections: false }  //Calendario
   @UI:  { lineItem: [ { position :50 ,
                     importance: #MEDIUM,
                     label: 'End Date' }],
-                    identification: [{ position:50 }]}   // Position 50 in the identification facet  *Instance Details* in the Fiori application
+          selectionField: [{ position: 50 }],
+          identification: [{ position:50 }]} // Position 50 in the identification facet  *Instance Details* in the Fiori application
 
   EndDate;
 
+  @UI.fieldGroup: [{ qualifier:'Price', position:10 }] // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
   @UI:  { lineItem: [ { position :60 ,
                       importance: #LOW,
                       label: 'Bookin Fee' }],
-                      identification: [{ position:60 }]} // Position 60 in the identification facet  *Instance Details* in the Fiori application
+          identification: [{ position:60 }]} // Position 60 in the identification facet  *Instance Details* in the Fiori application
 
   BookingFee;
 
+  @UI.fieldGroup: [{ qualifier:'Price', position:20 }] // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
   @UI:  { lineItem: [ { position :70 ,
                     importance: #HIGH,
                     label: 'Total Price' }],
@@ -116,40 +158,60 @@ annotate entity z_c_travel_fjcm with
 
 
   TotalPrice;
- 
- // Im not using the line item annotation here, because the field is already in the fields Total price and Booking Fee with the * PROPAGATION* declared in the CDS
- 
-//  @UI: { lineItem: [ { position :80 ,
-//                   importance: #HIGH,
-//                   label: 'Currency Code'   }],
-//                   identification: [{ position:80 }]}        // Position 80 in the identification facet  *Instance Details* in the Fiori application
-                  
+  
+  @UI.fieldGroup: [{ qualifier:'Price', position:30, label: 'Price With VAT' }] // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
+  @UI:  { lineItem: [ { position :71 ,
+                    importance: #MEDIUM,
+                    label: 'Price With VAT' }],
+                    identification: [{ position:71 }]} // Position 71 in the identification facet  *Instance Details* in the Fiori application
+  
+  PriceWithVAT;
+  
+  // Im not using the line item annotation here, because the field is already in the fields Total price and Booking Fee with the * PROPAGATION* declared in the CDS
+
+  //  @UI: { lineItem: [ { position :80 ,
+  //                   importance: #HIGH,
+  //                   label: 'Currency Code'   }],
+  //                   identification: [{ position:80 }]}        // Position 80 in the identification facet  *Instance Details* in the Fiori application
+
+  @UI.fieldGroup: [{ qualifier:'Price', position:30 }] // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
   @Consumption.valueHelpDefinition: [{ entity: { name:'I_CurrencyStdVH', // This is the value help definition for the AgencyID field
                                                 element: 'Currency' },        // This element is the one that will be used in the value help
                                                 useForValidation: true }]     // This is used to validate
-
+  @UI.hidden: true // This annotation is used to hide the field in the Fiori application
   CurrencyCode;
 
-  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Overall_Status_VH',      
-                                                 element: 'OverallStatus' },             
-                                                 useForValidation: true }]          
+  @UI.fieldGroup: [{ qualifier:'Status',  // Para asignarlos a una seccion especifica del object page, en este caso la seccion de Pruebita (:
+                     position:10, 
+                     targetElement: 'OverallStatus',
+                     criticality: 'StatusCriticality' }] 
+  @Consumption.valueHelpDefinition: [{ entity: { name:'/DMO/I_Overall_Status_VH',
+                                                 element: 'OverallStatus' },
+                                                 useForValidation: true }]
   @UI: { lineItem: [ { position :90 ,
-                   importance: #HIGH,
-                   label: 'OverAllStatus'   } ],   //If i dont defined the label, its gonna take the name of *DataElement*
+                       importance: #HIGH,
+                       targetElement: 'OverallStatus',
+                       criticality: 'StatusCriticality' , // This is used to define the criticality of the field, it should be the name of the field that has the criticality annotation
+                       label: 'OverAllStatus'   } ],   //If i dont defined the label, its gonna take the name of *DataElement*
          selectionField: [{ position:40 }], // Selection fields are used in the filter bar of the Fiori application *Here is 40, to follow the order of selection fields*
          textArrangement: #TEXT_ONLY, // Text arrangement is used to define how the text is displayed in the Fiori application
-         identification: [{ position:90 }]}  // Position 90 in the identification facet  *Instance Details* in the Fiori application
-
+         identification: [{ position:90 }]} // Position 90 in the identification facet  *Instance Details* in the Fiori application
+    
   OverallStatus;
   
-  @UI.hidden: true  // This annotation is used to hide the field in the Fiori application
+  
+  @UI.hidden: true
+  StatusCriticality;
+
+  @UI.hidden: true // This annotation is used to hide the field in the Fiori application
   OverallStatusText;
-  
-  @UI.hidden: true  // This annotation is used to hide the field in the Fiori application
+
+  @UI.hidden: true // This annotation is used to hide the field in the Fiori application
   LastChangedAt;
-  
-  @UI.hidden: true  // This annotation is used to hide the field  in the Fiori application
+
+  @UI.hidden: true // This annotation is used to hide the field  in the Fiori application
   LocalLastChangedAt;
+
 }
 
 // Made by the consumption CDS

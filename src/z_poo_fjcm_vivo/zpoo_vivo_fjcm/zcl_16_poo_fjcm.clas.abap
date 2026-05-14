@@ -1,20 +1,13 @@
-class zcl_16_poo_fjcm definition inheriting from zcl_15_poo_fjcm
+class ZCL_16_POO_FJCM definition
   public
-  final
-  create public .
+  create private .
 
-  public section.
-    methods: airplane_type redefinition.
-  protected section.
-  private section.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
 CLASS ZCL_16_POO_FJCM IMPLEMENTATION.
-
-
-  method airplane_type.
-    rv_airplane_type = 'Cargo Plane'.
-  endmethod.
 ENDCLASS.

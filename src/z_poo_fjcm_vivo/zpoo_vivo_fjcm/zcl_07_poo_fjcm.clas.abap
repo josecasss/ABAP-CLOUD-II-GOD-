@@ -1,20 +1,13 @@
-class zcl_07_poo_fjcm definition
+class ZCL_07_POO_FJCM definition
   public
-  create public .
+  create private .
 
-  public section.
-    methods:
-      walk returning value(rv_walk) type string.
-  protected section.
-  private section.
+public section.
+protected section.
+private section.
 ENDCLASS.
 
 
 
 CLASS ZCL_07_POO_FJCM IMPLEMENTATION.
-
-
-  method walk.
-    rv_walk = 'The animal walks'.
-  endmethod.
 ENDCLASS.
